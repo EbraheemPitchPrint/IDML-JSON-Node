@@ -1,0 +1,2616 @@
+{
+  "version": "10.0.0",
+  "isvx": true,
+  "author": "guest",
+  "client": "custom",
+  "hideTextPanel": false,
+  "hideImagePanel": false,
+  "product": {},
+  "disableImageClick": false,
+  "designId": "fe03098c96739de9a7bd0b360f582c7a",
+  "projectId": "",
+  "layout": "default",
+  "scaling": 4.602836879432624,
+  "unit": "cm",
+  "dPage": 0,
+  "moduleData": {},
+  "printCutMarks": true,
+  "pdfVersion": "1.7",
+  "iccProfile": "CoatedFOGRA27.icc",
+  "gsArguments": "",
+  "defaultTab": "backgrounds",
+  "threeData": false,
+  "watermark": "",
+  "saveForLater": false,
+  "pdfColor": "CMYK",
+  "pages": [
+    {
+      "canvas": {
+        "version": "3.4.0",
+        "objects": [
+          {
+            "type": "path",
+            "version": "3.4.0",
+            "originX": "left",
+            "originY": "top",
+            "left": 345.0384190074978,
+            "top": 97.27560549222801,
+            "width": 367.8814,
+            "height": 367.88140130859375,
+            "fill": "rgba(0,0,0,1)",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 4,
+            "scaleX": 1.2418416471230525,
+            "scaleY": 1.2418416471230525,
+            "angle": 0,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 0.1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 0
+                    },
+                    "_spot": "",
+                    "_rgb": {
+                      "r": 0,
+                      "g": 0,
+                      "b": 0
+                    }
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": null,
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "url": "https://s3.amazonaws.com/pitchprint.cdn/zwtxvza0mxy4nh6l2qa4wi9g568/resources/images/816722b6e2839663fb562e2a0dc6a596/1d5b952055b270bf02b3b2e880fd51851501506060054.svg",
+            "reference": "684fad03b68cc5a35774c61184b33179",
+            "tLocked": true,
+            "dLocked": false,
+            "eLocked": true,
+            "includeInForm": false,
+            "rawsvg": "<svg xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:cc=\"http://creativecommons.org/ns#\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"367.88141\" height=\"367.88141\" id=\"svg3004\"><path d=\"m 367.8814,183.9407 c 0,101.58766 -82.35305,183.94071 -183.9407,183.94071 C 82.35305,367.88141 0,285.52836 0,183.9407 0,82.353055 82.35305,8.6914062e-6 183.9407,8.6914062e-6 285.52835,8.6914062e-6 367.8814,82.353055 367.8814,183.9407 z\" /></svg>",
+            "d": "m 367.8814,183.9407 c 0,101.58766 -82.35305,183.94071 -183.9407,183.94071 C 82.35305,367.88141 0,285.52836 0,183.9407 0,82.353055 82.35305,8.6914062e-6 183.9407,8.6914062e-6 285.52835,8.6914062e-6 367.8814,82.353055 367.8814,183.9407 z",
+            "hideContext": true,
+            "path": [
+              ["m", 367.8814, 183.9407],
+              ["c", 0, 101.58766, -82.35305, 183.94071, -183.9407, 183.94071],
+              ["C", 82.35305, 367.88141, 0, 285.52836, 0, 183.9407],
+              [
+                "C",
+                0,
+                82.353055,
+                82.35305,
+                0.0000086914062,
+                183.9407,
+                0.0000086914062
+              ],
+              [
+                "C",
+                285.52835,
+                0.0000086914062,
+                367.8814,
+                82.353055,
+                367.8814,
+                183.9407
+              ],
+              ["z"]
+            ],
+            "svg": "<g transform=\"matrix(1.2418416471230525 0 0 1.2418416471230525 573.4636408684651 325.70082816572835)\"  >\n<path style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 0.1;\"  transform=\" translate(-183.9407, -183.94070934570308)\" d=\"m 367.8814 183.9407 c 0 101.58766 -82.35305 183.94071 -183.9407 183.94071 C 82.35305 367.88141 0 285.52836 0 183.9407 C 0 82.353055 82.35305 0.0000086914062 183.9407 0.0000086914062 C 285.52835 0.0000086914062 367.8814 82.353055 367.8814 183.9407 z\" stroke-linecap=\"round\" />\n</g>\n"
+          },
+          {
+            "type": "path",
+            "version": "3.4.0",
+            "originX": "left",
+            "originY": "top",
+            "left": 375.51628882158093,
+            "top": 120.20111477255305,
+            "width": 367.8814,
+            "height": 367.88140130859375,
+            "fill": "rgba(0,0,0,1)",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 4,
+            "scaleX": 1.0765968340863463,
+            "scaleY": 1.117544197271486,
+            "angle": 0,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 0
+                    },
+                    "_spot": "",
+                    "_rgb": {
+                      "r": 0,
+                      "g": 0,
+                      "b": 0
+                    }
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": null,
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "url": "https://s3.amazonaws.com/pitchprint.cdn/zwtxvza0mxy4nh6l2qa4wi9g568/resources/images/816722b6e2839663fb562e2a0dc6a596/1d5b952055b270bf02b3b2e880fd51851501506060054.svg",
+            "reference": "b48fb3066b6dc02224fab173501c1b07",
+            "tLocked": true,
+            "dLocked": false,
+            "eLocked": false,
+            "includeInForm": false,
+            "rawsvg": "<svg xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:cc=\"http://creativecommons.org/ns#\" xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\" xmlns:svg=\"http://www.w3.org/2000/svg\" xmlns=\"http://www.w3.org/2000/svg\" version=\"1.1\" width=\"367.88141\" height=\"367.88141\" id=\"svg3004\"><path d=\"m 367.8814,183.9407 c 0,101.58766 -82.35305,183.94071 -183.9407,183.94071 C 82.35305,367.88141 0,285.52836 0,183.9407 0,82.353055 82.35305,8.6914062e-6 183.9407,8.6914062e-6 285.52835,8.6914062e-6 367.8814,82.353055 367.8814,183.9407 z\" /></svg>",
+            "d": "m 367.8814,183.9407 c 0,101.58766 -82.35305,183.94071 -183.9407,183.94071 C 82.35305,367.88141 0,285.52836 0,183.9407 0,82.353055 82.35305,8.6914062e-6 183.9407,8.6914062e-6 285.52835,8.6914062e-6 367.8814,82.353055 367.8814,183.9407 z",
+            "path": [
+              ["m", 367.8814, 183.9407],
+              ["c", 0, 101.58766, -82.35305, 183.94071, -183.9407, 183.94071],
+              ["C", 82.35305, 367.88141, 0, 285.52836, 0, 183.9407],
+              [
+                "C",
+                0,
+                82.353055,
+                82.35305,
+                0.0000086914062,
+                183.9407,
+                0.0000086914062
+              ],
+              [
+                "C",
+                285.52835,
+                0.0000086914062,
+                367.8814,
+                82.353055,
+                367.8814,
+                183.9407
+              ],
+              ["z"]
+            ],
+            "svg": "<g transform=\"matrix(1.0765968340863463 0 0 1.117544197271486 573.5462641012073 325.7629774308139)\"  >\n<path style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  transform=\" translate(-183.9407, -183.94070934570308)\" d=\"m 367.8814 183.9407 c 0 101.58766 -82.35305 183.94071 -183.9407 183.94071 C 82.35305 367.88141 0 285.52836 0 183.9407 C 0 82.353055 82.35305 0.0000086914062 183.9407 0.0000086914062 C 285.52835 0.0000086914062 367.8814 82.353055 367.8814 183.9407 z\" stroke-linecap=\"round\" />\n</g>\n"
+          },
+          {
+            "type": "i-text",
+            "version": "3.4.0",
+            "originX": "center",
+            "originY": "top",
+            "left": 574.0845679012348,
+            "top": 271.12621258387276,
+            "width": 207.71484375,
+            "height": 45.199999999999996,
+            "fill": "#00d2de",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 10,
+            "scaleX": 1.2211403053560212,
+            "scaleY": 1.2211403053560212,
+            "angle": 0,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "text": "COMPANY",
+            "fontSize": 40,
+            "fontWeight": "bold",
+            "fontFamily": "caviar dreams",
+            "fontStyle": "normal",
+            "lineHeight": 1.16,
+            "underline": false,
+            "overline": false,
+            "linethrough": false,
+            "textAlign": "center",
+            "textBackgroundColor": "",
+            "charSpacing": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 53982
+                    },
+                    "_rgb": {
+                      "r": 0,
+                      "g": 210,
+                      "b": 222
+                    },
+                    "_cmyk": {
+                      "c": 1,
+                      "m": 0.06,
+                      "y": 0.01,
+                      "k": 0.12
+                    },
+                    "_spot": "PANTONE 7460 PC"
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": {
+                "thumbnail": "",
+                "width": -1,
+                "height": -1,
+                "fillMode": "stretch"
+              },
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "title": "Company",
+            "reference": "a3d59e21fe05e5230249efda2c3fa785",
+            "chain": "",
+            "tLocked": false,
+            "dLocked": false,
+            "eLocked": false,
+            "includeInForm": true,
+            "_textLines": [["C", "O", "M", "P", "A", "N", "Y"]],
+            "styles": {},
+            "svg": "<g transform=\"matrix(1.2211403053560212 0 0 1.2211403053560212 574.0845679012348 298.72398348491885)\" style=\"\"  >\n\t\t<text xml:space=\"preserve\" font-family=\"caviar dreams\" font-size=\"40\" font-style=\"normal\" font-weight=\"bold\" style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,210,222); fill-rule: nonzero; opacity: 1; white-space: pre;\" ><tspan x=\"-103.857421875\" y=\"12.565600000000007\" >COMPANY</tspan></text>\n</g>\n"
+          },
+          {
+            "type": "i-text",
+            "version": "3.4.0",
+            "originX": "center",
+            "originY": "top",
+            "left": 574.0845679012348,
+            "top": 335.58482618066654,
+            "width": 105.15625,
+            "height": 45.199999999999996,
+            "fill": "#ffffff",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 10,
+            "scaleX": 1.2211403053560212,
+            "scaleY": 1.2211403053560212,
+            "angle": 0,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "text": "NAME",
+            "fontSize": 40,
+            "fontWeight": "normal",
+            "fontFamily": "caviar dreams",
+            "fontStyle": "normal",
+            "lineHeight": 1.16,
+            "underline": false,
+            "overline": false,
+            "linethrough": false,
+            "textAlign": "center",
+            "textBackgroundColor": "",
+            "charSpacing": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 16777215
+                    },
+                    "_rgb": {
+                      "r": 255,
+                      "g": 255,
+                      "b": 255
+                    },
+                    "_cmyk": {
+                      "c": 0,
+                      "m": 0,
+                      "y": 0,
+                      "k": 0
+                    },
+                    "_spot": "White"
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": {
+                "thumbnail": "",
+                "width": -1,
+                "height": -1,
+                "fillMode": "stretch"
+              },
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "title": "Company",
+            "reference": "4d4f993ec33ca773569b7e0106e117aa",
+            "tLocked": false,
+            "dLocked": false,
+            "eLocked": false,
+            "includeInForm": false,
+            "_textLines": [["N", "A", "M", "E"]],
+            "styles": {},
+            "svg": "<g transform=\"matrix(1.2211403053560212 0 0 1.2211403053560212 574.0845679012348 363.18259708171263)\" style=\"\"  >\n\t\t<text xml:space=\"preserve\" font-family=\"caviar dreams\" font-size=\"40\" font-style=\"normal\" font-weight=\"normal\" style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; white-space: pre;\" ><tspan x=\"-52.578125\" y=\"12.565600000000007\" >NAME</tspan></text>\n</g>\n"
+          }
+        ],
+        "clipPath": {
+          "type": "rect",
+          "version": "3.4.0",
+          "originX": "left",
+          "originY": "top",
+          "left": 0,
+          "top": 0,
+          "width": 1148,
+          "height": 652,
+          "fill": "rgb(0,0,0)",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "miter",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "rx": 0,
+          "ry": 0
+        },
+        "height": 633.3333740234375,
+        "width": 1442.2222900390625,
+        "zoom": 0.7770961644459355,
+        "backgroundImageSvg": "<g transform=\"matrix(1.2 0 0 1.2394366197183098 574.0000000000001 326)\"  >\n\t<image style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  xlink:href=\"https://s3.amazonaws.com/pitchprint.cdn/zwtxvza0mxy4nh6l2qa4wi9g568/userfiles/uploadedimages/admin/79cc4bed0e6caeee2a2999c4d5ab0aee1511874780172.png\" x=\"-500\" y=\"-284\" width=\"1000\" height=\"568\"></image>\n</g>\n"
+      },
+      "pageData": {
+        "index": 0,
+        "fWidth": 8.8,
+        "fHeight": 5,
+        "title": "Front",
+        "scaling": 1,
+        "bleed": 0.2,
+        "nBleed": false,
+        "render": true,
+        "zLeft": 0,
+        "zTop": 0,
+        "fillData": {
+          "type": "image",
+          "colorData": {
+            "type": "solid",
+            "colors": [
+              {
+                "hex": {
+                  "hex": 14079702
+                },
+                "rgb": {
+                  "r": 214,
+                  "g": 214,
+                  "b": 214
+                },
+                "cmyk": {
+                  "c": 0,
+                  "m": 0,
+                  "y": 0,
+                  "k": 0.16078431372549018
+                },
+                "spot": "gray 84"
+              }
+            ],
+            "positions": [1],
+            "alphas": [1],
+            "rotation": 0
+          },
+          "assetData": {
+            "url": "https://s3.amazonaws.com/pitchprint.cdn/zwtxvza0mxy4nh6l2qa4wi9g568/userfiles/uploadedimages/admin/79cc4bed0e6caeee2a2999c4d5ab0aee1511874780172.png",
+            "thumbnail": "",
+            "fillMode": "stretch"
+          },
+          "strokeData": {
+            "width": 0,
+            "alpha": 1,
+            "type": "solid",
+            "fill": {
+              "type": "solid",
+              "colors": [
+                {
+                  "_hex": {
+                    "hex": {
+                      "hex": 0
+                    }
+                  },
+                  "_spot": ""
+                }
+              ],
+              "positions": [1],
+              "alphas": [1],
+              "rotation": 0
+            }
+          },
+          "alpha": 1
+        },
+        "margin": 0,
+        "hFoldLines": [],
+        "vFoldLines": [],
+        "quantity": 1,
+        "metaData": {},
+        "thumbnailImage": {
+          "url": "",
+          "fillMode": "stretch"
+        },
+        "templateSource": {
+          "url": "",
+          "fillMode": "stretch"
+        },
+        "templateTint": "",
+        "foregroundSource": {
+          "url": "",
+          "fillMode": "stretch"
+        },
+        "foregroundIsMask": false,
+        "renderForeground": false,
+        "foregroundDimension": {
+          "top": 0,
+          "left": 0,
+          "right": 0,
+          "bottom": 0,
+          "width": -1,
+          "height": -1
+        },
+        "canvasDimension": {
+          "top": 0,
+          "left": 0,
+          "right": 0,
+          "bottom": 0,
+          "width": 8.8,
+          "height": 5,
+          "_pixels": {
+            "width": 1148,
+            "height": 652,
+            "left": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "fWidth": 1148,
+            "fHeight": 652
+          }
+        },
+        "renderCanvasOffset": true
+      },
+      "id": "d8964e90f416127422d816e90d76b42b",
+      "hooks": {
+        "b43cf0009924281419a002f1b0f4bfb7": {
+          "id": "b43cf0009924281419a002f1b0f4bfb7",
+          "target": "Cc815c8ed9def495a710836acafed7ca7",
+          "dir": "bottom",
+          "gap": 0.10973936921630663,
+          "host": "ebea2c6bd2a0f6980818ef426cc33067"
+        },
+        "773006c8f1c6c99fb8e14ab0dd8db9aa": {
+          "id": "773006c8f1c6c99fb8e14ab0dd8db9aa",
+          "target": "6ebedd9e42db79d074fc7e7dcb82c32a",
+          "dir": "bottom",
+          "gap": 0.04176207841161301,
+          "host": "8341d96b2fab1dddc020cd01bf10611a"
+        }
+      }
+    },
+    {
+      "canvas": {
+        "version": "3.4.0",
+        "objects": [
+          {
+            "type": "i-text",
+            "version": "3.4.0",
+            "originX": "left",
+            "originY": "top",
+            "left": 66.94600071963767,
+            "top": 195.8866408476856,
+            "width": 101.7578125,
+            "height": 45.199999999999996,
+            "fill": "#ffffff",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 10,
+            "scaleX": 1.4418283123480733,
+            "scaleY": 1.4418283123480733,
+            "angle": 0,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "text": "JOHN",
+            "fontSize": 40,
+            "fontWeight": "normal",
+            "fontFamily": "caviar dreams",
+            "fontStyle": "normal",
+            "lineHeight": 1.16,
+            "underline": false,
+            "overline": false,
+            "linethrough": false,
+            "textAlign": "left",
+            "textBackgroundColor": "",
+            "charSpacing": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 16777215
+                    },
+                    "_rgb": {
+                      "r": 255,
+                      "g": 255,
+                      "b": 255
+                    },
+                    "_cmyk": {
+                      "c": 0,
+                      "m": 0,
+                      "y": 0,
+                      "k": 0
+                    },
+                    "_spot": "White"
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": {
+                "thumbnail": "",
+                "width": -1,
+                "height": -1,
+                "fillMode": "stretch"
+              },
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "title": "Name",
+            "reference": "a616b6d12e11b3a97b6ed4ef30fd0bf4",
+            "chain": "",
+            "tLocked": false,
+            "dLocked": false,
+            "eLocked": false,
+            "includeInForm": true,
+            "_textLines": [["J", "O", "H", "N"]],
+            "styles": {},
+            "svg": "<g transform=\"matrix(1.4418283123480733 0 0 1.4418283123480733 140.304648252191 228.47196070675207)\" style=\"\"  >\n\t\t<text xml:space=\"preserve\" font-family=\"caviar dreams\" font-size=\"40\" font-style=\"normal\" font-weight=\"normal\" style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; white-space: pre;\" ><tspan x=\"-50.87890625\" y=\"12.565600000000007\" >JOHN</tspan></text>\n</g>\n"
+          },
+          {
+            "type": "i-text",
+            "version": "3.4.0",
+            "originX": "left",
+            "originY": "top",
+            "left": 66.94600071963764,
+            "top": 261.76343706531276,
+            "width": 226.0546875,
+            "height": 45.199999999999996,
+            "fill": "#ffffff",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 10,
+            "scaleX": 0.690405984857265,
+            "scaleY": 0.690405984857265,
+            "angle": 0,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "text": "Chief Architect",
+            "fontSize": 40,
+            "fontWeight": "normal",
+            "fontFamily": "Abel",
+            "fontStyle": "normal",
+            "lineHeight": 1.16,
+            "underline": false,
+            "overline": false,
+            "linethrough": false,
+            "textAlign": "left",
+            "textBackgroundColor": "",
+            "charSpacing": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 16777215
+                    },
+                    "_rgb": {
+                      "r": 255,
+                      "g": 255,
+                      "b": 255
+                    },
+                    "_cmyk": {
+                      "c": 0,
+                      "m": 0,
+                      "y": 0,
+                      "k": 0
+                    },
+                    "_spot": "White"
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": {
+                "thumbnail": "",
+                "width": -1,
+                "height": -1,
+                "fillMode": "stretch"
+              },
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "title": "Title",
+            "reference": "b1f6e9cc5c1b330889909a5126ac29ec",
+            "chain": "",
+            "tLocked": false,
+            "dLocked": false,
+            "eLocked": false,
+            "includeInForm": true,
+            "_textLines": [
+              [
+                "C",
+                "h",
+                "i",
+                "e",
+                "f",
+                " ",
+                "A",
+                "r",
+                "c",
+                "h",
+                "i",
+                "t",
+                "e",
+                "c",
+                "t"
+              ]
+            ],
+            "styles": {},
+            "svg": "<g transform=\"matrix(0.690405984857265 0 0 0.690405984857265 144.98075529715703 277.36661232308694)\" style=\"\"  >\n\t\t<text xml:space=\"preserve\" font-family=\"Abel\" font-size=\"40\" font-style=\"normal\" font-weight=\"normal\" style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; white-space: pre;\" ><tspan x=\"-113.02734375\" y=\"12.565600000000007\" >Chief Architect</tspan></text>\n</g>\n"
+          },
+          {
+            "type": "i-text",
+            "version": "3.4.0",
+            "originX": "left",
+            "originY": "top",
+            "left": 117.49478298659916,
+            "top": 390.7735385755817,
+            "width": 242.63671875,
+            "height": 45.199999999999996,
+            "fill": "#ffffff",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 10,
+            "scaleX": 0.6032138857782754,
+            "scaleY": 0.6032138857782754,
+            "angle": 0,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "text": "023 5679 9900",
+            "fontSize": 40,
+            "fontWeight": "normal",
+            "fontFamily": "Abel",
+            "fontStyle": "normal",
+            "lineHeight": 1.16,
+            "underline": false,
+            "overline": false,
+            "linethrough": false,
+            "textAlign": "left",
+            "textBackgroundColor": "",
+            "charSpacing": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 16777215
+                    },
+                    "_rgb": {
+                      "r": 255,
+                      "g": 255,
+                      "b": 255
+                    },
+                    "_cmyk": {
+                      "c": 0,
+                      "m": 0,
+                      "y": 0,
+                      "k": 0
+                    },
+                    "_spot": "White"
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": {
+                "thumbnail": "",
+                "width": -1,
+                "height": -1,
+                "fillMode": "stretch"
+              },
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "title": "Phone",
+            "reference": "56b2221e557926db56bf3aea9350617f",
+            "chain": "",
+            "tLocked": false,
+            "dLocked": false,
+            "eLocked": false,
+            "includeInForm": true,
+            "_textLines": [
+              ["0", "2", "3", " ", "5", "6", "7", "9", " ", "9", "9", "0", "0"]
+            ],
+            "styles": {},
+            "svg": "<g transform=\"matrix(0.6032138857782754 0 0 0.6032138857782754 190.67570196143816 404.4061723941707)\" style=\"\"  >\n\t\t<text xml:space=\"preserve\" font-family=\"Abel\" font-size=\"40\" font-style=\"normal\" font-weight=\"normal\" style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; white-space: pre;\" ><tspan x=\"-121.318359375\" y=\"12.565600000000007\" >023 5679 9900</tspan></text>\n</g>\n"
+          },
+          {
+            "type": "i-text",
+            "version": "3.4.0",
+            "originX": "left",
+            "originY": "top",
+            "left": 117.49478298659916,
+            "top": 434.08333733347297,
+            "width": 311.40625,
+            "height": 45.199999999999996,
+            "fill": "#ffffff",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 10,
+            "scaleX": 0.6032138857782754,
+            "scaleY": 0.6032138857782754,
+            "angle": 0,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "text": "john@company.com",
+            "fontSize": 40,
+            "fontWeight": "normal",
+            "fontFamily": "Abel",
+            "fontStyle": "normal",
+            "lineHeight": 1.16,
+            "underline": false,
+            "overline": false,
+            "linethrough": false,
+            "textAlign": "left",
+            "textBackgroundColor": "",
+            "charSpacing": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 16777215
+                    },
+                    "_rgb": {
+                      "r": 255,
+                      "g": 255,
+                      "b": 255
+                    },
+                    "_cmyk": {
+                      "c": 0,
+                      "m": 0,
+                      "y": 0,
+                      "k": 0
+                    },
+                    "_spot": "White"
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": {
+                "thumbnail": "",
+                "width": -1,
+                "height": -1,
+                "fillMode": "stretch"
+              },
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "title": "Email",
+            "reference": "b71524031531e249f13f0c61f0857df6",
+            "chain": "",
+            "tLocked": false,
+            "dLocked": false,
+            "eLocked": false,
+            "includeInForm": true,
+            "_textLines": [
+              [
+                "j",
+                "o",
+                "h",
+                "n",
+                "@",
+                "c",
+                "o",
+                "m",
+                "p",
+                "a",
+                "n",
+                "y",
+                ".",
+                "c",
+                "o",
+                "m"
+              ]
+            ],
+            "styles": {},
+            "svg": "<g transform=\"matrix(0.6032138857782754 0 0 0.6032138857782754 211.4170700456697 447.71597115206197)\" style=\"\"  >\n\t\t<text xml:space=\"preserve\" font-family=\"Abel\" font-size=\"40\" font-style=\"normal\" font-weight=\"normal\" style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; white-space: pre;\" ><tspan x=\"-155.703125\" y=\"12.565600000000007\" >john@company.com</tspan></text>\n</g>\n"
+          },
+          {
+            "type": "i-text",
+            "version": "3.4.0",
+            "originX": "left",
+            "originY": "top",
+            "left": 117.49478298659916,
+            "top": 474.3204111572388,
+            "width": 293.5546875,
+            "height": 45.199999999999996,
+            "fill": "#ffffff",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 10,
+            "scaleX": 0.6032138857782754,
+            "scaleY": 0.6032138857782754,
+            "angle": 0,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "text": "www.company.com",
+            "fontSize": 40,
+            "fontWeight": "normal",
+            "fontFamily": "Abel",
+            "fontStyle": "normal",
+            "lineHeight": 1.16,
+            "underline": false,
+            "overline": false,
+            "linethrough": false,
+            "textAlign": "left",
+            "textBackgroundColor": "",
+            "charSpacing": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 16777215
+                    },
+                    "_rgb": {
+                      "r": 255,
+                      "g": 255,
+                      "b": 255
+                    },
+                    "_cmyk": {
+                      "c": 0,
+                      "m": 0,
+                      "y": 0,
+                      "k": 0
+                    },
+                    "_spot": "White"
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": {
+                "thumbnail": "",
+                "width": -1,
+                "height": -1,
+                "fillMode": "stretch"
+              },
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "title": "Website",
+            "reference": "af83168e0f10d2e53607df79d600083d",
+            "chain": "",
+            "tLocked": false,
+            "dLocked": false,
+            "eLocked": false,
+            "includeInForm": true,
+            "_textLines": [
+              [
+                "w",
+                "w",
+                "w",
+                ".",
+                "c",
+                "o",
+                "m",
+                "p",
+                "a",
+                "n",
+                "y",
+                ".",
+                "c",
+                "o",
+                "m"
+              ]
+            ],
+            "styles": {},
+            "svg": "<g transform=\"matrix(0.6032138857782754 0 0 0.6032138857782754 206.03291485425032 487.9530449758278)\" style=\"\"  >\n\t\t<text xml:space=\"preserve\" font-family=\"Abel\" font-size=\"40\" font-style=\"normal\" font-weight=\"normal\" style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1; white-space: pre;\" ><tspan x=\"-146.77734375\" y=\"12.565600000000007\" >www.company.com</tspan></text>\n</g>\n"
+          },
+          {
+            "type": "i-text",
+            "version": "3.4.0",
+            "originX": "left",
+            "originY": "top",
+            "left": 225.06198608185915,
+            "top": 195.88664084768556,
+            "width": 81.3671875,
+            "height": 45.199999999999996,
+            "fill": "#00d2de",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 10,
+            "scaleX": 1.4418283123480733,
+            "scaleY": 1.4418283123480733,
+            "angle": 0,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "text": "DOE",
+            "fontSize": 40,
+            "fontWeight": "normal",
+            "fontFamily": "caviar dreams",
+            "fontStyle": "normal",
+            "lineHeight": 1.16,
+            "underline": false,
+            "overline": false,
+            "linethrough": false,
+            "textAlign": "left",
+            "textBackgroundColor": "",
+            "charSpacing": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 53982
+                    },
+                    "_rgb": {
+                      "r": 0,
+                      "g": 210,
+                      "b": 222
+                    },
+                    "_cmyk": {
+                      "c": 1,
+                      "m": 0.06,
+                      "y": 0.01,
+                      "k": 0.12
+                    },
+                    "_spot": "PANTONE 7460 PC"
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": {
+                "thumbnail": "",
+                "width": -1,
+                "height": -1,
+                "fillMode": "stretch"
+              },
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "title": "Name",
+            "reference": "47bf4725ef61b5366d5d93bf21d36eba",
+            "tLocked": false,
+            "dLocked": false,
+            "eLocked": false,
+            "includeInForm": false,
+            "_textLines": [["D", "O", "E"]],
+            "styles": {},
+            "svg": "<g transform=\"matrix(1.4418283123480733 0 0 1.4418283123480733 283.7207433986763 228.47196070675201)\" style=\"\"  >\n\t\t<text xml:space=\"preserve\" font-family=\"caviar dreams\" font-size=\"40\" font-style=\"normal\" font-weight=\"normal\" style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 10; fill: rgb(0,210,222); fill-rule: nonzero; opacity: 1; white-space: pre;\" ><tspan x=\"-40.68359375\" y=\"12.565600000000007\" >DOE</tspan></text>\n</g>\n"
+          },
+          {
+            "type": "group",
+            "version": "3.4.0",
+            "originX": "left",
+            "originY": "top",
+            "left": 66.94600071963767,
+            "top": 394.5923738757342,
+            "width": 178.82,
+            "height": 223.53,
+            "fill": "rgb(0,0,0)",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 4,
+            "scaleX": 0.12383189445608835,
+            "scaleY": 0.12577012022656023,
+            "angle": -9.874958561820275,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 0
+                    },
+                    "_spot": ""
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": {
+                "_url": "",
+                "fillMode": "stretch"
+              },
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "url": "https://s3.amazonaws.com/pitchprint.cdn/zwtxvza0mxy4nh6l2qa4wi9g568/userfiles/uploadedimages/admin/8825ba241a98512561364dca9a3e00eb1510906404065.svg",
+            "reference": "C32b8506140cc2a8c1f99b19a829c9c66",
+            "tLocked": false,
+            "dLocked": false,
+            "eLocked": false,
+            "includeInForm": false,
+            "rawsvg": "<svg id=\"7e742b39-365f-4aac-9a31-9a412f28c0bd\" data-name=\"Layer 1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 178.82 223.53\"><title>phone@1x</title><g id=\"8e188773-c343-42fd-b659-4d22924928ff\" data-name=\"y79Ed6.tif\"><path d=\"M61.75,4.71a9.34,9.34,0,0,1,4.43,4.18q13.35,23.2,26.76,46.35c2.79,4.85,1.77,8.31-3.13,11.11C85.55,68.78,81.29,71.26,77,73.7S69.08,75.11,66.71,71Q53.06,47.49,39.48,23.91C37,19.59,38,16,42.4,13.42c5-2.92,10.06-5.81,15.09-8.71Z\"/><path d=\"M117.28,217.21c-6.81.12-12.43-2.08-17.76-5.23-10.82-6.4-20-14.73-28.5-23.93a248.16,248.16,0,0,1-32.19-44.39c-10.45-18.14-19-37.12-24.38-57.42A112,112,0,0,1,10.36,55.7c.16-9.77,3.85-17.68,11.47-23.77a103.59,103.59,0,0,1,11.08-7.4c1.26-.77,1.81-.39,2.47.75Q45,42,54.67,58.7c2.91,5,5.79,10.07,8.73,15.08.59,1,.82,1.69-.36,2.49-5,3.37-7.2,8.34-7.94,14.09-1.26,9.76,1.08,19,4.59,27.91a85.41,85.41,0,0,0,19.83,30.47c4.41,4.29,9.36,7.85,15.31,9.75,5.1,1.63,10.15,1.62,15-.83,1.3-.65,1.86-.27,2.5.85q14,24.35,28.09,48.66c.43.74.91,1.42-.22,2.05-5.45,3-10.92,6-17.08,7.33A22.33,22.33,0,0,1,117.28,217.21Z\"/><path d=\"M114.64,152.16a6.2,6.2,0,0,1,3.14-6c5-3,10-5.92,15.1-8.69,3.55-1.93,7.14-.74,9.26,2.89,5.61,9.62,11.17,19.28,16.74,28.92,3.5,6.05,7,12.12,10.5,18.15a7.68,7.68,0,0,1,.9,6.95,6.62,6.62,0,0,1-3,3.4c-4.82,2.79-9.61,5.64-14.49,8.32-3.76,2.07-7.41,1-9.58-2.74Q129.47,179.73,115.8,156A6.33,6.33,0,0,1,114.64,152.16Z\"/></g></svg>",
+            "objects": [
+              {
+                "type": "path",
+                "version": "3.4.0",
+                "originX": "left",
+                "originY": "top",
+                "left": -52.89478734565627,
+                "top": -106.75233957299892,
+                "width": 56.31804332720659,
+                "height": 70.2942737411954,
+                "fill": "rgba(255,255,255,1)",
+                "stroke": null,
+                "strokeWidth": 0,
+                "strokeDashArray": null,
+                "strokeLineCap": "butt",
+                "strokeDashOffset": 0,
+                "strokeLineJoin": "miter",
+                "strokeMiterLimit": 4,
+                "scaleX": 1,
+                "scaleY": 1,
+                "angle": 0,
+                "flipX": false,
+                "flipY": false,
+                "opacity": 1,
+                "shadow": null,
+                "visible": true,
+                "clipTo": null,
+                "backgroundColor": "",
+                "fillRule": "nonzero",
+                "paintFirst": "fill",
+                "globalCompositeOperation": "source-over",
+                "transformMatrix": null,
+                "skewX": 0,
+                "skewY": 0,
+                "fillData": {
+                  "type": "color",
+                  "colorData": {
+                    "type": "solid",
+                    "colors": [
+                      {
+                        "_hex": {
+                          "hex": 16777215
+                        },
+                        "_rgb": {
+                          "r": 255,
+                          "g": 255,
+                          "b": 255
+                        },
+                        "_spot": "White"
+                      }
+                    ],
+                    "positions": [1],
+                    "alphas": [1],
+                    "rotation": 0
+                  },
+                  "assetData": null,
+                  "strokeData": {
+                    "width": 0,
+                    "alpha": 1,
+                    "type": "solid",
+                    "fill": {
+                      "type": "solid",
+                      "colors": [
+                        {
+                          "_hex": {
+                            "hex": 0
+                          },
+                          "_spot": ""
+                        }
+                      ],
+                      "positions": [1],
+                      "alphas": [1],
+                      "rotation": 0
+                    }
+                  },
+                  "alpha": 1
+                },
+                "tLocked": false,
+                "dLocked": false,
+                "eLocked": false,
+                "includeInForm": false,
+                "path": [
+                  ["M", 61.75, 4.71],
+                  ["a", 9.34, 9.34, 0, 0, 1, 4.43, 4.18],
+                  ["q", 13.35, 23.2, 26.76, 46.35],
+                  ["c", 2.79, 4.85, 1.77, 8.31, -3.13, 11.11],
+                  ["C", 85.55, 68.78, 81.29, 71.26, 77, 73.7],
+                  ["S", 69.08, 75.11, 66.71, 71],
+                  ["Q", 53.06, 47.49, 39.48, 23.91],
+                  ["C", 37, 19.59, 38, 16, 42.4, 13.42],
+                  ["c", 5, -2.92, 10.06, -5.81, 15.09, -8.71],
+                  ["Z"]
+                ]
+              },
+              {
+                "type": "path",
+                "version": "3.4.0",
+                "originX": "left",
+                "originY": "top",
+                "left": -80.68695304665455,
+                "top": -87.33505669088034,
+                "width": 130.54027436316784,
+                "height": 193.08739626387927,
+                "fill": "rgba(255,255,255,1)",
+                "stroke": null,
+                "strokeWidth": 0,
+                "strokeDashArray": null,
+                "strokeLineCap": "butt",
+                "strokeDashOffset": 0,
+                "strokeLineJoin": "miter",
+                "strokeMiterLimit": 4,
+                "scaleX": 1,
+                "scaleY": 1,
+                "angle": 0,
+                "flipX": false,
+                "flipY": false,
+                "opacity": 1,
+                "shadow": null,
+                "visible": true,
+                "clipTo": null,
+                "backgroundColor": "",
+                "fillRule": "nonzero",
+                "paintFirst": "fill",
+                "globalCompositeOperation": "source-over",
+                "transformMatrix": null,
+                "skewX": 0,
+                "skewY": 0,
+                "fillData": {
+                  "type": "color",
+                  "colorData": {
+                    "type": "solid",
+                    "colors": [
+                      {
+                        "_hex": {
+                          "hex": 16777215
+                        },
+                        "_rgb": {
+                          "r": 255,
+                          "g": 255,
+                          "b": 255
+                        },
+                        "_spot": "White"
+                      }
+                    ],
+                    "positions": [1],
+                    "alphas": [1],
+                    "rotation": 0
+                  },
+                  "assetData": null,
+                  "strokeData": {
+                    "width": 0,
+                    "alpha": 1,
+                    "type": "solid",
+                    "fill": {
+                      "type": "solid",
+                      "colors": [
+                        {
+                          "_hex": {
+                            "hex": 0
+                          },
+                          "_spot": ""
+                        }
+                      ],
+                      "positions": [1],
+                      "alphas": [1],
+                      "rotation": 0
+                    }
+                  },
+                  "alpha": 1
+                },
+                "tLocked": false,
+                "dLocked": false,
+                "eLocked": false,
+                "includeInForm": false,
+                "path": [
+                  ["M", 117.28, 217.21],
+                  ["c", -6.81, 0.12, -12.43, -2.08, -17.76, -5.23],
+                  ["c", -10.82, -6.4, -20, -14.73, -28.5, -23.93],
+                  ["a", 248.16, 248.16, 0, 0, 1, -32.19, -44.39],
+                  ["c", -10.45, -18.14, -19, -37.12, -24.38, -57.42],
+                  ["A", 112, 112, 0, 0, 1, 10.36, 55.7],
+                  ["c", 0.16, -9.77, 3.85, -17.68, 11.47, -23.77],
+                  ["a", 103.59, 103.59, 0, 0, 1, 11.08, -7.4],
+                  ["c", 1.26, -0.77, 1.81, -0.39, 2.47, 0.75],
+                  ["Q", 45, 42, 54.67, 58.7],
+                  ["c", 2.91, 5, 5.79, 10.07, 8.73, 15.08],
+                  ["c", 0.59, 1, 0.82, 1.69, -0.36, 2.49],
+                  ["c", -5, 3.37, -7.2, 8.34, -7.94, 14.09],
+                  ["c", -1.26, 9.76, 1.08, 19, 4.59, 27.91],
+                  ["a", 85.41, 85.41, 0, 0, 0, 19.83, 30.47],
+                  ["c", 4.41, 4.29, 9.36, 7.85, 15.31, 9.75],
+                  ["c", 5.1, 1.63, 10.15, 1.62, 15, -0.83],
+                  ["c", 1.3, -0.65, 1.86, -0.27, 2.5, 0.85],
+                  ["q", 14, 24.35, 28.09, 48.66],
+                  ["c", 0.43, 0.74, 0.91, 1.42, -0.22, 2.05],
+                  ["c", -5.45, 3, -10.92, 6, -17.08, 7.33],
+                  ["A", 22.33, 22.33, 0, 0, 1, 117.28, 217.21],
+                  ["Z"]
+                ]
+              },
+              {
+                "type": "path",
+                "version": "3.4.0",
+                "originX": "left",
+                "originY": "top",
+                "left": 23.565952199644258,
+                "top": 25.09104011444137,
+                "width": 56.12100084701031,
+                "height": 70.587570914249,
+                "fill": "rgba(255,255,255,1)",
+                "stroke": null,
+                "strokeWidth": 0,
+                "strokeDashArray": null,
+                "strokeLineCap": "butt",
+                "strokeDashOffset": 0,
+                "strokeLineJoin": "miter",
+                "strokeMiterLimit": 4,
+                "scaleX": 1,
+                "scaleY": 1,
+                "angle": 0,
+                "flipX": false,
+                "flipY": false,
+                "opacity": 1,
+                "shadow": null,
+                "visible": true,
+                "clipTo": null,
+                "backgroundColor": "",
+                "fillRule": "nonzero",
+                "paintFirst": "fill",
+                "globalCompositeOperation": "source-over",
+                "transformMatrix": null,
+                "skewX": 0,
+                "skewY": 0,
+                "fillData": {
+                  "type": "color",
+                  "colorData": {
+                    "type": "solid",
+                    "colors": [
+                      {
+                        "_hex": {
+                          "hex": 16777215
+                        },
+                        "_rgb": {
+                          "r": 255,
+                          "g": 255,
+                          "b": 255
+                        },
+                        "_spot": "White"
+                      }
+                    ],
+                    "positions": [1],
+                    "alphas": [1],
+                    "rotation": 0
+                  },
+                  "assetData": null,
+                  "strokeData": {
+                    "width": 0,
+                    "alpha": 1,
+                    "type": "solid",
+                    "fill": {
+                      "type": "solid",
+                      "colors": [
+                        {
+                          "_hex": {
+                            "hex": 0
+                          },
+                          "_spot": ""
+                        }
+                      ],
+                      "positions": [1],
+                      "alphas": [1],
+                      "rotation": 0
+                    }
+                  },
+                  "alpha": 1
+                },
+                "tLocked": false,
+                "dLocked": false,
+                "eLocked": false,
+                "includeInForm": false,
+                "path": [
+                  ["M", 114.64, 152.16],
+                  ["a", 6.2, 6.2, 0, 0, 1, 3.14, -6],
+                  ["c", 5, -3, 10, -5.92, 15.1, -8.69],
+                  ["c", 3.55, -1.93, 7.14, -0.74, 9.26, 2.89],
+                  ["c", 5.61, 9.62, 11.17, 19.28, 16.74, 28.92],
+                  ["c", 3.5, 6.05, 7, 12.12, 10.5, 18.15],
+                  ["a", 7.68, 7.68, 0, 0, 1, 0.9, 6.95],
+                  ["a", 6.62, 6.62, 0, 0, 1, -3, 3.4],
+                  ["c", -4.82, 2.79, -9.61, 5.64, -14.49, 8.32],
+                  ["c", -3.76, 2.07, -7.41, 1, -9.58, -2.74],
+                  ["Q", 129.47, 179.73, 115.8, 156],
+                  ["A", 6.33, 6.33, 0, 0, 1, 114.64, 152.16],
+                  ["Z"]
+                ]
+              }
+            ],
+            "svg": "<g transform=\"matrix(0.12199724749928378 -0.02123698865617017 0.02156939153897678 0.12390675724286279 80.26447766390237 406.54201344323457)\"  >\n<g style=\"\"   >\n\t\t<g transform=\"matrix(1 0 0 1 -24.735765682052975 -71.60520270240121)\"  >\n<path style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;\"  transform=\" translate(-66.30986276421264, -39.8571368705977)\" d=\"M 61.75 4.71 a 9.34 9.34 0 0 1 4.43 4.18 q 13.35 23.2 26.76 46.35 c 2.79 4.85 1.77 8.31 -3.13 11.11 C 85.55 68.78 81.29 71.26 77 73.7 S 69.08 75.11 66.71 71 Q 53.06 47.49 39.48 23.91 C 37 19.59 38 16 42.4 13.42 c 5 -2.92 10.06 -5.81 15.09 -8.71 Z\" stroke-linecap=\"round\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 -15.416815865070632 9.2086414410593)\"  >\n<path style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;\"  transform=\" translate(-75.62881258119498, -120.67098101405823)\" d=\"M 117.28 217.21 c -6.81 0.12 -12.43 -2.08 -17.76 -5.23 c -10.82 -6.4 -20 -14.73 -28.5 -23.93 a 248.16 248.16 0 0 1 -32.19 -44.39 c -10.45 -18.14 -19 -37.12 -24.38 -57.42 A 112 112 0 0 1 10.36 55.7 c 0.16 -9.77 3.85 -17.68 11.47 -23.77 a 103.59 103.59 0 0 1 11.08 -7.4 c 1.26 -0.77 1.81 -0.39 2.47 0.75 Q 45 42 54.67 58.7 c 2.91 5 5.79 10.07 8.73 15.08 c 0.59 1 0.82 1.69 -0.36 2.49 c -5 3.37 -7.2 8.34 -7.94 14.09 c -1.26 9.76 1.08 19 4.59 27.91 a 85.41 85.41 0 0 0 19.83 30.47 c 4.41 4.29 9.36 7.85 15.31 9.75 c 5.1 1.63 10.15 1.62 15 -0.83 c 1.3 -0.65 1.86 -0.27 2.5 0.85 q 14 24.35 28.09 48.66 c 0.43 0.74 0.91 1.42 -0.22 2.05 c -5.45 3 -10.92 6 -17.08 7.33 A 22.33 22.33 0 0 1 117.28 217.21 Z\" stroke-linecap=\"round\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 51.62645262314941 60.38482557156587)\"  >\n<path style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;\"  transform=\" translate(-142.67208106941501, -171.8471651445648)\" d=\"M 114.64 152.16 a 6.2 6.2 0 0 1 3.14 -6 c 5 -3 10 -5.92 15.1 -8.69 c 3.55 -1.93 7.14 -0.74 9.26 2.89 c 5.61 9.62 11.17 19.28 16.74 28.92 c 3.5 6.05 7 12.12 10.5 18.15 a 7.68 7.68 0 0 1 0.9 6.95 a 6.62 6.62 0 0 1 -3 3.4 c -4.82 2.79 -9.61 5.64 -14.49 8.32 c -3.76 2.07 -7.41 1 -9.58 -2.74 Q 129.47 179.73 115.8 156 A 6.33 6.33 0 0 1 114.64 152.16 Z\" stroke-linecap=\"round\" />\n</g>\n</g>\n</g>\n"
+          },
+          {
+            "type": "group",
+            "version": "3.4.0",
+            "originX": "left",
+            "originY": "top",
+            "left": 66.94600071963767,
+            "top": 442.80352734876897,
+            "width": 229.41,
+            "height": 144.71,
+            "fill": "rgb(0,0,0)",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 4,
+            "scaleX": 0.12188009590908151,
+            "scaleY": 0.10831855234890582,
+            "angle": 0,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 0
+                    },
+                    "_spot": ""
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": {
+                "_url": "",
+                "fillMode": "stretch"
+              },
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "url": "https://s3.amazonaws.com/pitchprint.cdn/zwtxvza0mxy4nh6l2qa4wi9g568/userfiles/uploadedimages/admin/3f0bd3b822bd366e1ed018eceecafd521510819002718.svg",
+            "reference": "C5bfa883bab9bf8915ba4fc35f8fd3f2d",
+            "tLocked": false,
+            "dLocked": false,
+            "eLocked": false,
+            "includeInForm": false,
+            "rawsvg": "<svg id=\"adcd4281-30c2-4478-8219-3c5de8226a45\" data-name=\"Layer 1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 229.41 144.71\"><title>email@1x</title><path d=\"M151.47,65.76l64,73H13.24l64-73c.51.35,1,.65,1.41,1Q95.81,79.55,113,92.39a1.9,1.9,0,0,0,2.75,0q17.22-12.92,34.5-25.75C150.59,66.36,151,66.12,151.47,65.76Z\"/><path d=\"M5.6,2.29H223.08l-108.74,81Z\"/><path d=\"M71.94,61.76,4.86,138.31V11.77Z\"/><path d=\"M223.51,137.93,156.75,61.76,223.51,12Z\"/></svg>",
+            "objects": [
+              {
+                "type": "path",
+                "version": "3.4.0",
+                "originX": "left",
+                "originY": "top",
+                "left": -101.445,
+                "top": -5.265000000000015,
+                "width": 202.23,
+                "height": 73,
+                "fill": "rgba(255,255,255,1)",
+                "stroke": null,
+                "strokeWidth": 0,
+                "strokeDashArray": null,
+                "strokeLineCap": "butt",
+                "strokeDashOffset": 0,
+                "strokeLineJoin": "miter",
+                "strokeMiterLimit": 4,
+                "scaleX": 1,
+                "scaleY": 1,
+                "angle": 0,
+                "flipX": false,
+                "flipY": false,
+                "opacity": 1,
+                "shadow": null,
+                "visible": true,
+                "clipTo": null,
+                "backgroundColor": "",
+                "fillRule": "nonzero",
+                "paintFirst": "fill",
+                "globalCompositeOperation": "source-over",
+                "transformMatrix": null,
+                "skewX": 0,
+                "skewY": 0,
+                "fillData": {
+                  "type": "color",
+                  "colorData": {
+                    "type": "solid",
+                    "colors": [
+                      {
+                        "_hex": {
+                          "hex": 16777215
+                        },
+                        "_rgb": {
+                          "r": 255,
+                          "g": 255,
+                          "b": 255
+                        },
+                        "_spot": "White"
+                      }
+                    ],
+                    "positions": [1],
+                    "alphas": [1],
+                    "rotation": 0
+                  },
+                  "assetData": null,
+                  "strokeData": {
+                    "width": 0,
+                    "alpha": 1,
+                    "type": "solid",
+                    "fill": {
+                      "type": "solid",
+                      "colors": [
+                        {
+                          "_hex": {
+                            "hex": 0
+                          },
+                          "_spot": ""
+                        }
+                      ],
+                      "positions": [1],
+                      "alphas": [1],
+                      "rotation": 0
+                    }
+                  },
+                  "alpha": 1
+                },
+                "tLocked": false,
+                "dLocked": false,
+                "eLocked": false,
+                "includeInForm": false,
+                "path": [
+                  ["M", 151.47, 65.76],
+                  ["l", 64, 73],
+                  ["H", 13.24],
+                  ["l", 64, -73],
+                  ["c", 0.51, 0.35, 1, 0.65, 1.41, 1],
+                  ["Q", 95.81, 79.55, 113, 92.39],
+                  ["a", 1.9, 1.9, 0, 0, 0, 2.75, 0],
+                  ["q", 17.22, -12.92, 34.5, -25.75],
+                  ["C", 150.59, 66.36, 151, 66.12, 151.47, 65.76],
+                  ["Z"]
+                ]
+              },
+              {
+                "type": "path",
+                "version": "3.4.0",
+                "originX": "left",
+                "originY": "top",
+                "left": -109.085,
+                "top": -68.73500000000001,
+                "width": 217.48000000000002,
+                "height": 81,
+                "fill": "rgba(255,255,255,1)",
+                "stroke": null,
+                "strokeWidth": 0,
+                "strokeDashArray": null,
+                "strokeLineCap": "butt",
+                "strokeDashOffset": 0,
+                "strokeLineJoin": "miter",
+                "strokeMiterLimit": 4,
+                "scaleX": 1,
+                "scaleY": 1,
+                "angle": 0,
+                "flipX": false,
+                "flipY": false,
+                "opacity": 1,
+                "shadow": null,
+                "visible": true,
+                "clipTo": null,
+                "backgroundColor": "",
+                "fillRule": "nonzero",
+                "paintFirst": "fill",
+                "globalCompositeOperation": "source-over",
+                "transformMatrix": null,
+                "skewX": 0,
+                "skewY": 0,
+                "fillData": {
+                  "type": "color",
+                  "colorData": {
+                    "type": "solid",
+                    "colors": [
+                      {
+                        "_hex": {
+                          "hex": 16777215
+                        },
+                        "_rgb": {
+                          "r": 255,
+                          "g": 255,
+                          "b": 255
+                        },
+                        "_spot": "White"
+                      }
+                    ],
+                    "positions": [1],
+                    "alphas": [1],
+                    "rotation": 0
+                  },
+                  "assetData": null,
+                  "strokeData": {
+                    "width": 0,
+                    "alpha": 1,
+                    "type": "solid",
+                    "fill": {
+                      "type": "solid",
+                      "colors": [
+                        {
+                          "_hex": {
+                            "hex": 0
+                          },
+                          "_spot": ""
+                        }
+                      ],
+                      "positions": [1],
+                      "alphas": [1],
+                      "rotation": 0
+                    }
+                  },
+                  "alpha": 1
+                },
+                "tLocked": false,
+                "dLocked": false,
+                "eLocked": false,
+                "includeInForm": false,
+                "path": [
+                  ["M", 5.6, 2.29],
+                  ["H", 223.08],
+                  ["l", -108.74, 81],
+                  ["Z"]
+                ]
+              },
+              {
+                "type": "path",
+                "version": "3.4.0",
+                "originX": "left",
+                "originY": "top",
+                "left": -109.82499999999999,
+                "top": -59.255,
+                "width": 67.08,
+                "height": 126.54,
+                "fill": "rgba(255,255,255,1)",
+                "stroke": null,
+                "strokeWidth": 0,
+                "strokeDashArray": null,
+                "strokeLineCap": "butt",
+                "strokeDashOffset": 0,
+                "strokeLineJoin": "miter",
+                "strokeMiterLimit": 4,
+                "scaleX": 1,
+                "scaleY": 1,
+                "angle": 0,
+                "flipX": false,
+                "flipY": false,
+                "opacity": 1,
+                "shadow": null,
+                "visible": true,
+                "clipTo": null,
+                "backgroundColor": "",
+                "fillRule": "nonzero",
+                "paintFirst": "fill",
+                "globalCompositeOperation": "source-over",
+                "transformMatrix": null,
+                "skewX": 0,
+                "skewY": 0,
+                "fillData": {
+                  "type": "color",
+                  "colorData": {
+                    "type": "solid",
+                    "colors": [
+                      {
+                        "_hex": {
+                          "hex": 16777215
+                        },
+                        "_rgb": {
+                          "r": 255,
+                          "g": 255,
+                          "b": 255
+                        },
+                        "_spot": "White"
+                      }
+                    ],
+                    "positions": [1],
+                    "alphas": [1],
+                    "rotation": 0
+                  },
+                  "assetData": null,
+                  "strokeData": {
+                    "width": 0,
+                    "alpha": 1,
+                    "type": "solid",
+                    "fill": {
+                      "type": "solid",
+                      "colors": [
+                        {
+                          "_hex": {
+                            "hex": 0
+                          },
+                          "_spot": ""
+                        }
+                      ],
+                      "positions": [1],
+                      "alphas": [1],
+                      "rotation": 0
+                    }
+                  },
+                  "alpha": 1
+                },
+                "tLocked": false,
+                "dLocked": false,
+                "eLocked": false,
+                "includeInForm": false,
+                "path": [
+                  ["M", 71.94, 61.76],
+                  ["L", 4.86, 138.31],
+                  ["V", 11.77],
+                  ["Z"]
+                ]
+              },
+              {
+                "type": "path",
+                "version": "3.4.0",
+                "originX": "left",
+                "originY": "top",
+                "left": 42.06500000000001,
+                "top": -59.025000000000006,
+                "width": 66.75999999999999,
+                "height": 125.93,
+                "fill": "rgba(255,255,255,1)",
+                "stroke": null,
+                "strokeWidth": 0,
+                "strokeDashArray": null,
+                "strokeLineCap": "butt",
+                "strokeDashOffset": 0,
+                "strokeLineJoin": "miter",
+                "strokeMiterLimit": 4,
+                "scaleX": 1,
+                "scaleY": 1,
+                "angle": 0,
+                "flipX": false,
+                "flipY": false,
+                "opacity": 1,
+                "shadow": null,
+                "visible": true,
+                "clipTo": null,
+                "backgroundColor": "",
+                "fillRule": "nonzero",
+                "paintFirst": "fill",
+                "globalCompositeOperation": "source-over",
+                "transformMatrix": null,
+                "skewX": 0,
+                "skewY": 0,
+                "fillData": {
+                  "type": "color",
+                  "colorData": {
+                    "type": "solid",
+                    "colors": [
+                      {
+                        "_hex": {
+                          "hex": 16777215
+                        },
+                        "_rgb": {
+                          "r": 255,
+                          "g": 255,
+                          "b": 255
+                        },
+                        "_spot": "White"
+                      }
+                    ],
+                    "positions": [1],
+                    "alphas": [1],
+                    "rotation": 0
+                  },
+                  "assetData": null,
+                  "strokeData": {
+                    "width": 0,
+                    "alpha": 1,
+                    "type": "solid",
+                    "fill": {
+                      "type": "solid",
+                      "colors": [
+                        {
+                          "_hex": {
+                            "hex": 0
+                          },
+                          "_spot": ""
+                        }
+                      ],
+                      "positions": [1],
+                      "alphas": [1],
+                      "rotation": 0
+                    }
+                  },
+                  "alpha": 1
+                },
+                "tLocked": false,
+                "dLocked": false,
+                "eLocked": false,
+                "includeInForm": false,
+                "path": [
+                  ["M", 223.51, 137.93],
+                  ["L", 156.75, 61.76],
+                  ["L", 223.51, 12],
+                  ["Z"]
+                ]
+              }
+            ],
+            "svg": "<g transform=\"matrix(0.12188009590908151 0 0 0.10831855234890582 80.92625712088886 450.64091620397403)\"  >\n<g style=\"\"   >\n\t\t<g transform=\"matrix(1 0 0 1 -0.3299999999999983 31.234999999999985)\"  >\n<path style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;\"  transform=\" translate(-114.35499999999999, -102.25999999999999)\" d=\"M 151.47 65.76 l 64 73 H 13.24 l 64 -73 c 0.51 0.35 1 0.65 1.41 1 Q 95.81 79.55 113 92.39 a 1.9 1.9 0 0 0 2.75 0 q 17.22 -12.92 34.5 -25.75 C 150.59 66.36 151 66.12 151.47 65.76 Z\" stroke-linecap=\"round\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 -0.34499999999998465 -28.235000000000014)\"  >\n<path style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;\"  transform=\" translate(-114.34, -42.79)\" d=\"M 5.6 2.29 H 223.08 l -108.74 81 Z\" stroke-linecap=\"round\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 -76.285 4.015000000000001)\"  >\n<path style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;\"  transform=\" translate(-38.4, -75.04)\" d=\"M 71.94 61.76 L 4.86 138.31 V 11.77 Z\" stroke-linecap=\"round\" />\n</g>\n\t\t<g transform=\"matrix(1 0 0 1 75.44500000000001 3.9399999999999977)\"  >\n<path style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;\"  transform=\" translate(-190.13, -74.965)\" d=\"M 223.51 137.93 L 156.75 61.76 L 223.51 12 Z\" stroke-linecap=\"round\" />\n</g>\n</g>\n</g>\n"
+          },
+          {
+            "type": "path",
+            "version": "3.4.0",
+            "originX": "left",
+            "originY": "top",
+            "left": 66.94600071963767,
+            "top": 477.3149517360461,
+            "width": 213.2101894339733,
+            "height": 213.20018903973303,
+            "fill": "rgba(255,255,255,1)",
+            "stroke": null,
+            "strokeWidth": 0,
+            "strokeDashArray": null,
+            "strokeLineCap": "butt",
+            "strokeDashOffset": 0,
+            "strokeLineJoin": "miter",
+            "strokeMiterLimit": 4,
+            "scaleX": 0.11359071247815737,
+            "scaleY": 0.10480041045973772,
+            "angle": 0,
+            "flipX": false,
+            "flipY": false,
+            "opacity": 1,
+            "shadow": null,
+            "visible": true,
+            "clipTo": null,
+            "backgroundColor": "",
+            "fillRule": "nonzero",
+            "paintFirst": "fill",
+            "globalCompositeOperation": "source-over",
+            "transformMatrix": null,
+            "skewX": 0,
+            "skewY": 0,
+            "fillData": {
+              "type": "color",
+              "colorData": {
+                "type": "solid",
+                "colors": [
+                  {
+                    "_hex": {
+                      "hex": 16777215
+                    },
+                    "_rgb": {
+                      "r": 255,
+                      "g": 255,
+                      "b": 255
+                    },
+                    "_spot": ""
+                  }
+                ],
+                "positions": [1],
+                "alphas": [1],
+                "rotation": 0
+              },
+              "assetData": null,
+              "strokeData": {
+                "width": 0,
+                "alpha": 1,
+                "type": "solid",
+                "fill": {
+                  "type": "solid",
+                  "colors": [
+                    {
+                      "_hex": {
+                        "hex": 0
+                      },
+                      "_spot": ""
+                    }
+                  ],
+                  "positions": [1],
+                  "alphas": [1],
+                  "rotation": 0
+                }
+              },
+              "alpha": 1
+            },
+            "url": "https://s3.amazonaws.com/pitchprint.cdn/zwtxvza0mxy4nh6l2qa4wi9g568/userfiles/uploadedimages/admin/4c9f27fe9c6438fd37871c8ef101dd131510819003013.svg",
+            "reference": "C4dae2f9f8e336d1b086f54df7c1ddc99",
+            "tLocked": false,
+            "dLocked": false,
+            "eLocked": false,
+            "includeInForm": false,
+            "rawsvg": "<svg id=\"b274bb4e-592e-4763-98bb-cadccd23cd47\" data-name=\"Layer 1\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 229.41 230.59\"><title>website@1x</title><path d=\"M7.06,115.65A106.71,106.71,0,0,1,113.75,9.12c58.82.07,106.63,48,106.52,106.7s-48,106.61-106.74,106.5A106.75,106.75,0,0,1,7.06,115.65Zm152.3-5.06c0-.25,0-.41,0-.57a121,121,0,0,0-7.83-37.89,1.21,1.21,0,0,0-1.37-.9q-15.19,0-30.39,0c-.32,0-.64,0-1,.05v39.29Zm-50.8-39.34h-1.08c-10.1,0-20.2,0-30.29,0a1.33,1.33,0,0,0-1.46,1,120.82,120.82,0,0,0-7.42,32.29c-.18,2-.26,4-.39,6h40.65Zm0,88.9v-39.3H68c0,.24,0,.4,0,.56a121.37,121.37,0,0,0,7.75,37.72,1.38,1.38,0,0,0,1.56,1c10,0,20.06,0,30.1,0Zm10.23,0h1.17c10.06,0,20.13,0,30.19,0a1.32,1.32,0,0,0,1.47-1A120.88,120.88,0,0,0,159,126.84c.18-2,.27-4,.4-6H118.78ZM162,71.25a131.9,131.9,0,0,1,7.59,39.29h35.37c0-.41,0-.74,0-1.07a90.71,90.71,0,0,0-10.77-37.24,1.62,1.62,0,0,0-1.67-1c-9.74,0-19.48,0-29.22,0Zm-96.62.06c-.38,0-.61-.06-.83-.06q-15,0-29.91,0a1.27,1.27,0,0,0-1.27.83A90.84,90.84,0,0,0,22.7,106.52c-.13,1.33-.2,2.66-.31,4H57.79A131.69,131.69,0,0,1,65.35,71.31ZM162,160.08c.32,0,.52.06.71.06q15.05,0,30.1,0a1.13,1.13,0,0,0,1.12-.74,90.57,90.57,0,0,0,10.51-33c.22-1.85.34-3.71.51-5.62H169.55A132.63,132.63,0,0,1,162,160.08Zm-96.68.06a132.74,132.74,0,0,1-7.56-39.32H22.46c0,.41,0,.77,0,1.12a90.6,90.6,0,0,0,10.82,37.32,1.47,1.47,0,0,0,1.52.9q14.71,0,29.41,0Zm27.71,44.44c-.13-.14-.25-.3-.38-.43a116.61,116.61,0,0,1-22.78-33.08,1.25,1.25,0,0,0-1.34-.83q-13.57,0-27.14,0c-.28,0-.56,0-1.05.08C54,188.06,71.43,199.53,93.05,204.58Zm93.79-34.05-.13-.28h-1.08c-8.85,0-17.7,0-26.55,0a1.65,1.65,0,0,0-1.77,1.11A116.26,116.26,0,0,1,134.81,204c-.19.19-.36.41-.53.61C155.92,199.52,173.36,188.05,186.84,170.53ZM93,26.81C71.43,31.9,54,43.36,40.32,61.12h1.37c8.88,0,17.76,0,26.64,0A1.57,1.57,0,0,0,70,60.07a116,116,0,0,1,17.31-27C89.17,31,91.11,28.9,93,26.81Zm41.27-.22a1.77,1.77,0,0,0,.12.37,4.91,4.91,0,0,0,.33.36A116.63,116.63,0,0,1,157.4,60.21a1.38,1.38,0,0,0,1.49.93c9,0,18,0,26.93,0,.31,0,.61,0,1.16-.07C173.33,43.36,155.92,31.9,134.27,26.59ZM108.55,170.33H80.7a104.43,104.43,0,0,0,27.85,34.52Zm10.23,34.51a104.5,104.5,0,0,0,27.82-34.52H118.79ZM108.57,26.57A104.57,104.57,0,0,0,80.75,61h27.82Zm38,34.51a104.69,104.69,0,0,0-27.8-34.46V61.08Z\"/></svg>",
+            "d": "M7.06,115.65A106.71,106.71,0,0,1,113.75,9.12c58.82.07,106.63,48,106.52,106.7s-48,106.61-106.74,106.5A106.75,106.75,0,0,1,7.06,115.65Zm152.3-5.06c0-.25,0-.41,0-.57a121,121,0,0,0-7.83-37.89,1.21,1.21,0,0,0-1.37-.9q-15.19,0-30.39,0c-.32,0-.64,0-1,.05v39.29Zm-50.8-39.34h-1.08c-10.1,0-20.2,0-30.29,0a1.33,1.33,0,0,0-1.46,1,120.82,120.82,0,0,0-7.42,32.29c-.18,2-.26,4-.39,6h40.65Zm0,88.9v-39.3H68c0,.24,0,.4,0,.56a121.37,121.37,0,0,0,7.75,37.72,1.38,1.38,0,0,0,1.56,1c10,0,20.06,0,30.1,0Zm10.23,0h1.17c10.06,0,20.13,0,30.19,0a1.32,1.32,0,0,0,1.47-1A120.88,120.88,0,0,0,159,126.84c.18-2,.27-4,.4-6H118.78ZM162,71.25a131.9,131.9,0,0,1,7.59,39.29h35.37c0-.41,0-.74,0-1.07a90.71,90.71,0,0,0-10.77-37.24,1.62,1.62,0,0,0-1.67-1c-9.74,0-19.48,0-29.22,0Zm-96.62.06c-.38,0-.61-.06-.83-.06q-15,0-29.91,0a1.27,1.27,0,0,0-1.27.83A90.84,90.84,0,0,0,22.7,106.52c-.13,1.33-.2,2.66-.31,4H57.79A131.69,131.69,0,0,1,65.35,71.31ZM162,160.08c.32,0,.52.06.71.06q15.05,0,30.1,0a1.13,1.13,0,0,0,1.12-.74,90.57,90.57,0,0,0,10.51-33c.22-1.85.34-3.71.51-5.62H169.55A132.63,132.63,0,0,1,162,160.08Zm-96.68.06a132.74,132.74,0,0,1-7.56-39.32H22.46c0,.41,0,.77,0,1.12a90.6,90.6,0,0,0,10.82,37.32,1.47,1.47,0,0,0,1.52.9q14.71,0,29.41,0Zm27.71,44.44c-.13-.14-.25-.3-.38-.43a116.61,116.61,0,0,1-22.78-33.08,1.25,1.25,0,0,0-1.34-.83q-13.57,0-27.14,0c-.28,0-.56,0-1.05.08C54,188.06,71.43,199.53,93.05,204.58Zm93.79-34.05-.13-.28h-1.08c-8.85,0-17.7,0-26.55,0a1.65,1.65,0,0,0-1.77,1.11A116.26,116.26,0,0,1,134.81,204c-.19.19-.36.41-.53.61C155.92,199.52,173.36,188.05,186.84,170.53ZM93,26.81C71.43,31.9,54,43.36,40.32,61.12h1.37c8.88,0,17.76,0,26.64,0A1.57,1.57,0,0,0,70,60.07a116,116,0,0,1,17.31-27C89.17,31,91.11,28.9,93,26.81Zm41.27-.22a1.77,1.77,0,0,0,.12.37,4.91,4.91,0,0,0,.33.36A116.63,116.63,0,0,1,157.4,60.21a1.38,1.38,0,0,0,1.49.93c9,0,18,0,26.93,0,.31,0,.61,0,1.16-.07C173.33,43.36,155.92,31.9,134.27,26.59ZM108.55,170.33H80.7a104.43,104.43,0,0,0,27.85,34.52Zm10.23,34.51a104.5,104.5,0,0,0,27.82-34.52H118.79ZM108.57,26.57A104.57,104.57,0,0,0,80.75,61h27.82Zm38,34.51a104.69,104.69,0,0,0-27.8-34.46V61.08Z",
+            "path": [
+              ["M", 7.06, 115.65],
+              ["A", 106.71, 106.71, 0, 0, 1, 113.75, 9.12],
+              ["c", 58.82, 0.07, 106.63, 48, 106.52, 106.7],
+              ["s", -48, 106.61, -106.74, 106.5],
+              ["A", 106.75, 106.75, 0, 0, 1, 7.06, 115.65],
+              ["Z"],
+              ["m", 152.3, -5.06],
+              ["c", 0, -0.25, 0, -0.41, 0, -0.57],
+              ["a", 121, 121, 0, 0, 0, -7.83, -37.89],
+              ["a", 1.21, 1.21, 0, 0, 0, -1.37, -0.9],
+              ["q", -15.19, 0, -30.39, 0],
+              ["c", -0.32, 0, -0.64, 0, -1, 0.05],
+              ["v", 39.29],
+              ["Z"],
+              ["m", -50.8, -39.34],
+              ["h", -1.08],
+              ["c", -10.1, 0, -20.2, 0, -30.29, 0],
+              ["a", 1.33, 1.33, 0, 0, 0, -1.46, 1],
+              ["a", 120.82, 120.82, 0, 0, 0, -7.42, 32.29],
+              ["c", -0.18, 2, -0.26, 4, -0.39, 6],
+              ["h", 40.65],
+              ["Z"],
+              ["m", 0, 88.9],
+              ["v", -39.3],
+              ["H", 68],
+              ["c", 0, 0.24, 0, 0.4, 0, 0.56],
+              ["a", 121.37, 121.37, 0, 0, 0, 7.75, 37.72],
+              ["a", 1.38, 1.38, 0, 0, 0, 1.56, 1],
+              ["c", 10, 0, 20.06, 0, 30.1, 0],
+              ["Z"],
+              ["m", 10.23, 0],
+              ["h", 1.17],
+              ["c", 10.06, 0, 20.13, 0, 30.19, 0],
+              ["a", 1.32, 1.32, 0, 0, 0, 1.47, -1],
+              ["A", 120.88, 120.88, 0, 0, 0, 159, 126.84],
+              ["c", 0.18, -2, 0.27, -4, 0.4, -6],
+              ["H", 118.78],
+              ["Z"],
+              ["M", 162, 71.25],
+              ["a", 131.9, 131.9, 0, 0, 1, 7.59, 39.29],
+              ["h", 35.37],
+              ["c", 0, -0.41, 0, -0.74, 0, -1.07],
+              ["a", 90.71, 90.71, 0, 0, 0, -10.77, -37.24],
+              ["a", 1.62, 1.62, 0, 0, 0, -1.67, -1],
+              ["c", -9.74, 0, -19.48, 0, -29.22, 0],
+              ["Z"],
+              ["m", -96.62, 0.06],
+              ["c", -0.38, 0, -0.61, -0.06, -0.83, -0.06],
+              ["q", -15, 0, -29.91, 0],
+              ["a", 1.27, 1.27, 0, 0, 0, -1.27, 0.83],
+              ["A", 90.84, 90.84, 0, 0, 0, 22.7, 106.52],
+              ["c", -0.13, 1.33, -0.2, 2.66, -0.31, 4],
+              ["H", 57.79],
+              ["A", 131.69, 131.69, 0, 0, 1, 65.35, 71.31],
+              ["Z"],
+              ["M", 162, 160.08],
+              ["c", 0.32, 0, 0.52, 0.06, 0.71, 0.06],
+              ["q", 15.05, 0, 30.1, 0],
+              ["a", 1.13, 1.13, 0, 0, 0, 1.12, -0.74],
+              ["a", 90.57, 90.57, 0, 0, 0, 10.51, -33],
+              ["c", 0.22, -1.85, 0.34, -3.71, 0.51, -5.62],
+              ["H", 169.55],
+              ["A", 132.63, 132.63, 0, 0, 1, 162, 160.08],
+              ["Z"],
+              ["m", -96.68, 0.06],
+              ["a", 132.74, 132.74, 0, 0, 1, -7.56, -39.32],
+              ["H", 22.46],
+              ["c", 0, 0.41, 0, 0.77, 0, 1.12],
+              ["a", 90.6, 90.6, 0, 0, 0, 10.82, 37.32],
+              ["a", 1.47, 1.47, 0, 0, 0, 1.52, 0.9],
+              ["q", 14.71, 0, 29.41, 0],
+              ["Z"],
+              ["m", 27.71, 44.44],
+              ["c", -0.13, -0.14, -0.25, -0.3, -0.38, -0.43],
+              ["a", 116.61, 116.61, 0, 0, 1, -22.78, -33.08],
+              ["a", 1.25, 1.25, 0, 0, 0, -1.34, -0.83],
+              ["q", -13.57, 0, -27.14, 0],
+              ["c", -0.28, 0, -0.56, 0, -1.05, 0.08],
+              ["C", 54, 188.06, 71.43, 199.53, 93.05, 204.58],
+              ["Z"],
+              ["m", 93.79, -34.05],
+              ["l", -0.13, -0.28],
+              ["h", -1.08],
+              ["c", -8.85, 0, -17.7, 0, -26.55, 0],
+              ["a", 1.65, 1.65, 0, 0, 0, -1.77, 1.11],
+              ["A", 116.26, 116.26, 0, 0, 1, 134.81, 204],
+              ["c", -0.19, 0.19, -0.36, 0.41, -0.53, 0.61],
+              ["C", 155.92, 199.52, 173.36, 188.05, 186.84, 170.53],
+              ["Z"],
+              ["M", 93, 26.81],
+              ["C", 71.43, 31.9, 54, 43.36, 40.32, 61.12],
+              ["h", 1.37],
+              ["c", 8.88, 0, 17.76, 0, 26.64, 0],
+              ["A", 1.57, 1.57, 0, 0, 0, 70, 60.07],
+              ["a", 116, 116, 0, 0, 1, 17.31, -27],
+              ["C", 89.17, 31, 91.11, 28.9, 93, 26.81],
+              ["Z"],
+              ["m", 41.27, -0.22],
+              ["a", 1.77, 1.77, 0, 0, 0, 0.12, 0.37],
+              ["a", 4.91, 4.91, 0, 0, 0, 0.33, 0.36],
+              ["A", 116.63, 116.63, 0, 0, 1, 157.4, 60.21],
+              ["a", 1.38, 1.38, 0, 0, 0, 1.49, 0.93],
+              ["c", 9, 0, 18, 0, 26.93, 0],
+              ["c", 0.31, 0, 0.61, 0, 1.16, -0.07],
+              ["C", 173.33, 43.36, 155.92, 31.9, 134.27, 26.59],
+              ["Z"],
+              ["M", 108.55, 170.33],
+              ["H", 80.7],
+              ["a", 104.43, 104.43, 0, 0, 0, 27.85, 34.52],
+              ["Z"],
+              ["m", 10.23, 34.51],
+              ["a", 104.5, 104.5, 0, 0, 0, 27.82, -34.52],
+              ["H", 118.79],
+              ["Z"],
+              ["M", 108.57, 26.57],
+              ["A", 104.57, 104.57, 0, 0, 0, 80.75, 61],
+              ["h", 27.82],
+              ["Z"],
+              ["m", 38, 34.51],
+              ["a", 104.69, 104.69, 0, 0, 0, -27.8, -34.46],
+              ["V", 61.08],
+              ["Z"]
+            ],
+            "svg": "<g transform=\"matrix(0.11359071247815737 0 0 0.10480041045973772 79.05534938234163 488.486685396775)\"  >\n<path style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(255,255,255); fill-rule: nonzero; opacity: 1;\"  transform=\" translate(-113.66509471698666, -115.72009451986652)\" d=\"M 7.06 115.65 A 106.71 106.71 0 0 1 113.75 9.12 c 58.82 0.07 106.63 48 106.52 106.7 s -48 106.61 -106.74 106.5 A 106.75 106.75 0 0 1 7.06 115.65 Z m 152.3 -5.06 c 0 -0.25 0 -0.41 0 -0.57 a 121 121 0 0 0 -7.83 -37.89 a 1.21 1.21 0 0 0 -1.37 -0.9 q -15.19 0 -30.39 0 c -0.32 0 -0.64 0 -1 0.05 v 39.29 Z m -50.8 -39.34 h -1.08 c -10.1 0 -20.2 0 -30.29 0 a 1.33 1.33 0 0 0 -1.46 1 a 120.82 120.82 0 0 0 -7.42 32.29 c -0.18 2 -0.26 4 -0.39 6 h 40.65 Z m 0 88.9 v -39.3 H 68 c 0 0.24 0 0.4 0 0.56 a 121.37 121.37 0 0 0 7.75 37.72 a 1.38 1.38 0 0 0 1.56 1 c 10 0 20.06 0 30.1 0 Z m 10.23 0 h 1.17 c 10.06 0 20.13 0 30.19 0 a 1.32 1.32 0 0 0 1.47 -1 A 120.88 120.88 0 0 0 159 126.84 c 0.18 -2 0.27 -4 0.4 -6 H 118.78 Z M 162 71.25 a 131.9 131.9 0 0 1 7.59 39.29 h 35.37 c 0 -0.41 0 -0.74 0 -1.07 a 90.71 90.71 0 0 0 -10.77 -37.24 a 1.62 1.62 0 0 0 -1.67 -1 c -9.74 0 -19.48 0 -29.22 0 Z m -96.62 0.06 c -0.38 0 -0.61 -0.06 -0.83 -0.06 q -15 0 -29.91 0 a 1.27 1.27 0 0 0 -1.27 0.83 A 90.84 90.84 0 0 0 22.7 106.52 c -0.13 1.33 -0.2 2.66 -0.31 4 H 57.79 A 131.69 131.69 0 0 1 65.35 71.31 Z M 162 160.08 c 0.32 0 0.52 0.06 0.71 0.06 q 15.05 0 30.1 0 a 1.13 1.13 0 0 0 1.12 -0.74 a 90.57 90.57 0 0 0 10.51 -33 c 0.22 -1.85 0.34 -3.71 0.51 -5.62 H 169.55 A 132.63 132.63 0 0 1 162 160.08 Z m -96.68 0.06 a 132.74 132.74 0 0 1 -7.56 -39.32 H 22.46 c 0 0.41 0 0.77 0 1.12 a 90.6 90.6 0 0 0 10.82 37.32 a 1.47 1.47 0 0 0 1.52 0.9 q 14.71 0 29.41 0 Z m 27.71 44.44 c -0.13 -0.14 -0.25 -0.3 -0.38 -0.43 a 116.61 116.61 0 0 1 -22.78 -33.08 a 1.25 1.25 0 0 0 -1.34 -0.83 q -13.57 0 -27.14 0 c -0.28 0 -0.56 0 -1.05 0.08 C 54 188.06 71.43 199.53 93.05 204.58 Z m 93.79 -34.05 l -0.13 -0.28 h -1.08 c -8.85 0 -17.7 0 -26.55 0 a 1.65 1.65 0 0 0 -1.77 1.11 A 116.26 116.26 0 0 1 134.81 204 c -0.19 0.19 -0.36 0.41 -0.53 0.61 C 155.92 199.52 173.36 188.05 186.84 170.53 Z M 93 26.81 C 71.43 31.9 54 43.36 40.32 61.12 h 1.37 c 8.88 0 17.76 0 26.64 0 A 1.57 1.57 0 0 0 70 60.07 a 116 116 0 0 1 17.31 -27 C 89.17 31 91.11 28.9 93 26.81 Z m 41.27 -0.22 a 1.77 1.77 0 0 0 0.12 0.37 a 4.91 4.91 0 0 0 0.33 0.36 A 116.63 116.63 0 0 1 157.4 60.21 a 1.38 1.38 0 0 0 1.49 0.93 c 9 0 18 0 26.93 0 c 0.31 0 0.61 0 1.16 -0.07 C 173.33 43.36 155.92 31.9 134.27 26.59 Z M 108.55 170.33 H 80.7 a 104.43 104.43 0 0 0 27.85 34.52 Z m 10.23 34.51 a 104.5 104.5 0 0 0 27.82 -34.52 H 118.79 Z M 108.57 26.57 A 104.57 104.57 0 0 0 80.75 61 h 27.82 Z m 38 34.51 a 104.69 104.69 0 0 0 -27.8 -34.46 V 61.08 Z\" stroke-linecap=\"round\" />\n</g>\n"
+          }
+        ],
+        "clipPath": {
+          "type": "rect",
+          "version": "3.4.0",
+          "originX": "left",
+          "originY": "top",
+          "left": 0,
+          "top": 0,
+          "width": 1148,
+          "height": 652,
+          "fill": "rgb(0,0,0)",
+          "stroke": null,
+          "strokeWidth": 1,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "miter",
+          "strokeMiterLimit": 4,
+          "scaleX": 1,
+          "scaleY": 1,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "rx": 0,
+          "ry": 0
+        },
+        "backgroundImage": {
+          "type": "image",
+          "version": "3.4.0",
+          "originX": "left",
+          "originY": "top",
+          "left": -25.999999999999925,
+          "top": -26,
+          "width": 1000,
+          "height": 568,
+          "fill": "rgb(0,0,0)",
+          "stroke": null,
+          "strokeWidth": 0,
+          "strokeDashArray": null,
+          "strokeLineCap": "butt",
+          "strokeDashOffset": 0,
+          "strokeLineJoin": "miter",
+          "strokeMiterLimit": 4,
+          "scaleX": 1.2,
+          "scaleY": 1.2394366197183098,
+          "angle": 0,
+          "flipX": false,
+          "flipY": false,
+          "opacity": 1,
+          "shadow": null,
+          "visible": true,
+          "clipTo": null,
+          "backgroundColor": "",
+          "fillRule": "nonzero",
+          "paintFirst": "fill",
+          "globalCompositeOperation": "source-over",
+          "transformMatrix": null,
+          "skewX": 0,
+          "skewY": 0,
+          "crossOrigin": "anonymous",
+          "cropX": 0,
+          "cropY": 0,
+          "src": "https://s3.amazonaws.com/pitchprint.cdn/zwtxvza0mxy4nh6l2qa4wi9g568/userfiles/uploadedimages/admin/873dd3d03c780d11f45d366076038aa21511874781945.png",
+          "filters": [],
+          "svg": "<g transform=\"matrix(1.2 0 0 1.2394366197183098 574.0000000000001 326)\"  >\n\t<image style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  xlink:href=\"https://s3.amazonaws.com/pitchprint.cdn/zwtxvza0mxy4nh6l2qa4wi9g568/userfiles/uploadedimages/admin/873dd3d03c780d11f45d366076038aa21511874781945.png\" x=\"-500\" y=\"-284\" width=\"1000\" height=\"568\"></image>\n</g>\n"
+        },
+        "height": 633.3333740234375,
+        "width": 1442.2222900390625,
+        "zoom": 0.7770961644459355,
+        "backgroundImageSvg": "<g transform=\"matrix(1.2 0 0 1.2394366197183098 574.0000000000001 326)\"  >\n\t<image style=\"stroke: none; stroke-width: 0; stroke-dasharray: none; stroke-linecap: butt; stroke-dashoffset: 0; stroke-linejoin: miter; stroke-miterlimit: 4; fill: rgb(0,0,0); fill-rule: nonzero; opacity: 1;\"  xlink:href=\"https://s3.amazonaws.com/pitchprint.cdn/zwtxvza0mxy4nh6l2qa4wi9g568/userfiles/uploadedimages/admin/873dd3d03c780d11f45d366076038aa21511874781945.png\" x=\"-500\" y=\"-284\" width=\"1000\" height=\"568\"></image>\n</g>\n"
+      },
+      "pageData": {
+        "index": 1,
+        "fWidth": 8.8,
+        "fHeight": 5,
+        "title": "Back",
+        "scaling": 1,
+        "bleed": 0.2,
+        "nBleed": false,
+        "render": true,
+        "zLeft": 0,
+        "zTop": 0,
+        "fillData": {
+          "type": "image",
+          "colorData": {
+            "type": "solid",
+            "colors": [
+              {
+                "hex": {
+                  "hex": 5197647
+                },
+                "rgb": {
+                  "r": 79,
+                  "g": 79,
+                  "b": 79
+                },
+                "cmyk": {
+                  "c": 0,
+                  "m": 0,
+                  "y": 0,
+                  "k": 0.6901960784313725
+                },
+                "spot": "gray 31"
+              }
+            ],
+            "positions": [1],
+            "alphas": [1],
+            "rotation": 0
+          },
+          "assetData": {
+            "url": "https://s3.amazonaws.com/pitchprint.cdn/zwtxvza0mxy4nh6l2qa4wi9g568/userfiles/uploadedimages/admin/873dd3d03c780d11f45d366076038aa21511874781945.png",
+            "thumbnail": "",
+            "fillMode": "stretch"
+          },
+          "strokeData": {
+            "width": 0,
+            "alpha": 1,
+            "type": "solid",
+            "fill": {
+              "type": "solid",
+              "colors": [
+                {
+                  "_hex": {
+                    "hex": {
+                      "hex": 0
+                    }
+                  },
+                  "_spot": ""
+                }
+              ],
+              "positions": [1],
+              "alphas": [1],
+              "rotation": 0
+            }
+          },
+          "alpha": 1
+        },
+        "margin": 0,
+        "hFoldLines": [],
+        "vFoldLines": [],
+        "quantity": 1,
+        "metaData": {},
+        "thumbnailImage": {
+          "url": "",
+          "fillMode": "stretch"
+        },
+        "templateSource": {
+          "url": "",
+          "fillMode": "stretch"
+        },
+        "templateTint": "",
+        "foregroundSource": {
+          "url": "",
+          "fillMode": "stretch"
+        },
+        "foregroundIsMask": false,
+        "renderForeground": false,
+        "foregroundDimension": {
+          "top": 0,
+          "left": 0,
+          "right": 0,
+          "bottom": 0,
+          "width": -1,
+          "height": -1
+        },
+        "canvasDimension": {
+          "top": 0,
+          "left": 0,
+          "right": 0,
+          "bottom": 0,
+          "width": 8.8,
+          "height": 5,
+          "_pixels": {
+            "width": 1148,
+            "height": 652,
+            "left": 0,
+            "top": 0,
+            "right": 0,
+            "bottom": 0,
+            "fWidth": 1148,
+            "fHeight": 652
+          }
+        },
+        "renderCanvasOffset": true
+      },
+      "id": "95a560a886ac618df4144b16e2e657ce",
+      "hooks": {
+        "b43cf0009924281419a002f1b0f4bfb7": {
+          "id": "b43cf0009924281419a002f1b0f4bfb7",
+          "target": "Cc815c8ed9def495a710836acafed7ca7",
+          "dir": "bottom",
+          "gap": 0.10973936921630663,
+          "host": "ebea2c6bd2a0f6980818ef426cc33067"
+        },
+        "773006c8f1c6c99fb8e14ab0dd8db9aa": {
+          "id": "773006c8f1c6c99fb8e14ab0dd8db9aa",
+          "target": "6ebedd9e42db79d074fc7e7dcb82c32a",
+          "dir": "bottom",
+          "gap": 0.04176207841161301,
+          "host": "8341d96b2fab1dddc020cd01bf10611a"
+        },
+        "e076fc01bb3fc42ac87bf725a896f98c": {
+          "id": "e076fc01bb3fc42ac87bf725a896f98c",
+          "target": "47bf4725ef61b5366d5d93bf21d36eba",
+          "dir": "right",
+          "gap": 0.08741564134312577,
+          "host": "a616b6d12e11b3a97b6ed4ef30fd0bf4"
+        }
+      }
+    }
+  ]
+}
