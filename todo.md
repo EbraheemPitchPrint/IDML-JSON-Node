@@ -25,9 +25,9 @@
 - [x] Paragraph/character style inheritance + overrides
 - [x] Kerning/tracking/leading/baseline shift mapping
 - [x] First baseline behavior parity
-- [ ] Text-on-path baseline/alignment/start-offset parity
-- [ ] OpenType features (ligatures, small caps, etc.)
-- [ ] Superscript/subscript and case transforms
+- [x] Text-on-path baseline/alignment/start-offset parity
+- [x] OpenType features (ligatures, small caps, etc.)
+- [x] Superscript/subscript and case transforms
 - [ ] Vertical justification + inset spacing parity
 
 ## 4) Effects + appearance

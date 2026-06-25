@@ -8,7 +8,7 @@ const { applyCharStyles, getCharacterStyle, clearCharacterStyleCache } = require
 const { applyParaStyles, getParagraphStyle, clearParagraphStyleCache } = require('./paragraphStyles.js');
 const { applyObjStyles, clearObjectStyleCache } = require('./objectStyles.js');
 const { pt_px, multiplyAffineMatrices, decomposeTransform } = require('./utils.js');
-const { extractStyleProperties, pickStyleValue } = require('./styleUtils.js');
+const { extractStyleProperties, isExplicitStyleValue, pickStyleValue } = require('./styleUtils.js');
 
 /**
  * Processes an IDML file and extracts its content into a JSON structure.
@@ -88,7 +88,24 @@ async function processIdml(filePath) {
         };
     }
 
+    function getTextPreferences(preferencesDOM) {
+        const textPreference = preferencesDOM.getElementsByTagName('TextPreference')[0];
+        const readPercent = (attrName, fallback) => {
+            const value = textPreference ? parseFloat(textPreference.getAttribute(attrName)) : NaN;
+            return Number.isFinite(value) ? value : fallback;
+        };
+
+        return {
+            superscriptSizePercent: readPercent('SuperscriptSize', 58.3),
+            superscriptPositionPercent: readPercent('SuperscriptPosition', 33.3),
+            subscriptSizePercent: readPercent('SubscriptSize', 58.3),
+            subscriptPositionPercent: readPercent('SubscriptPosition', 33.3),
+            smallCapPercent: readPercent('SmallCap', 70)
+        };
+    }
+
     const documentData = getDocumentData(preferencesDOM);
+    const textPreferences = getTextPreferences(preferencesDOM);
     const storyDataCache = new Map();
     const threadedTextFrameMap = new Map();
     const threadedTextFrameChains = new Map();
@@ -230,7 +247,7 @@ async function processIdml(filePath) {
         } else if (tagName === 'TextFrame') {
             processedItem = await getTextFrame(itemElement, stylesDOM, graphicDOM, zip, parseXml, parent);
         } else if (tagName === 'Polygon') {
-            processedItem = await getPolygon(itemElement, stylesDOM, graphicDOM, parent);
+            processedItem = await getPolygon(itemElement, stylesDOM, graphicDOM, zip, parseXml, parent);
         } else if (tagName === 'GraphicLine') {
             processedItem = await getGraphicLine(itemElement, stylesDOM, graphicDOM, parent);
         } else if (tagName === 'Oval') {
@@ -869,22 +886,47 @@ async function processIdml(filePath) {
         };
     }
 
-    function resolveBaselineShift(position, baselineShift, fontSize) {
+    function resolveScriptStyle(position, baselineShift, fontSize) {
         const parsedShift = parseStyleNumber(baselineShift, null);
         const parsedFontSize = parseStyleNumber(fontSize, 12) || 12;
+        const normalizedPosition = position || 'Normal';
+        const isSuperscript = normalizedPosition === 'Superscript';
+        const isSubscript = normalizedPosition === 'Subscript';
+        const sizePercent = isSuperscript
+            ? textPreferences.superscriptSizePercent
+            : isSubscript
+                ? textPreferences.subscriptSizePercent
+                : 100;
+        const positionPercent = isSuperscript
+            ? textPreferences.superscriptPositionPercent
+            : isSubscript
+                ? textPreferences.subscriptPositionPercent
+                : 0;
+        const scale = sizePercent / 100;
         let shiftPt = parsedShift || 0;
+        let source = parsedShift === null ? 'none' : 'baseline-shift';
 
         if (parsedShift === null) {
-            if (position === 'Superscript') {
-                shiftPt = parsedFontSize * 0.33;
-            } else if (position === 'Subscript') {
-                shiftPt = -parsedFontSize * 0.2;
+            if (isSuperscript) {
+                shiftPt = parsedFontSize * (positionPercent / 100);
+                source = 'superscript-preference';
+            } else if (isSubscript) {
+                shiftPt = -parsedFontSize * (positionPercent / 100);
+                source = 'subscript-preference';
             }
         }
 
         return {
+            idmlPosition: normalizedPosition,
+            scriptPosition: isSuperscript ? 'superscript' : isSubscript ? 'subscript' : 'normal',
+            scriptScale: scale,
+            idmlScriptSizePercent: sizePercent,
+            idmlScriptPositionPercent: positionPercent,
+            idmlPointSize: parsedFontSize,
+            fontSize: Number((parsedFontSize * scale).toFixed(4)),
             idmlBaselineShift: shiftPt,
-            deltaY: shiftPt === 0 ? 0 : -pt_px(shiftPt)
+            deltaY: shiftPt === 0 ? 0 : -pt_px(shiftPt),
+            baselineShiftSource: source
         };
     }
 
@@ -894,6 +936,243 @@ async function processIdml(filePath) {
             return null;
         }
         return parsed;
+    }
+
+    const OPEN_TYPE_BOOLEAN_FEATURES = {
+        Ligatures: 'liga',
+        OTFContextualAlternate: 'calt',
+        OTFDiscretionaryLigature: 'dlig',
+        OTFFraction: 'frac',
+        OTFOrdinal: 'ordn',
+        OTFTitling: 'titl',
+        OTFMark: 'mark',
+        OTFLocale: 'locl',
+        OTFSlashedZero: 'zero',
+        OTFHistorical: 'hist',
+        OTFSwash: 'swsh',
+        OTFHVKana: 'vkna',
+        OTFProportionalMetrics: 'palt',
+        OTFRomanItalics: 'ital',
+        OTFOverlapSwash: 'swsh',
+        OTFStylisticAlternate: 'salt',
+        OTFJustificationAlternate: 'jalt'
+    };
+
+    const OPEN_TYPE_FIGURE_STYLE_FEATURES = {
+        ProportionalOldstyle: { pnum: true, onum: true, tnum: false, lnum: false },
+        TabularOldstyle: { tnum: true, onum: true, pnum: false, lnum: false },
+        ProportionalLining: { pnum: true, lnum: true, tnum: false, onum: false },
+        TabularLining: { tnum: true, lnum: true, pnum: false, onum: false }
+    };
+
+    function parseOpenTypeFeatureValue(value) {
+        if (!isExplicitStyleValue(value)) {
+            return undefined;
+        }
+        if (typeof value === 'boolean') {
+            return value;
+        }
+        const normalized = String(value).trim().toLowerCase();
+        if (normalized === 'true' || normalized === '1' || normalized === 'yes') {
+            return true;
+        }
+        if (normalized === 'false' || normalized === '0' || normalized === 'no') {
+            return false;
+        }
+        const numeric = Number(normalized);
+        return Number.isFinite(numeric) ? numeric : undefined;
+    }
+
+    function normalizeOpenTypeTag(value) {
+        if (!isExplicitStyleValue(value)) {
+            return null;
+        }
+        const normalized = String(value).trim().replace(/^\$ID\//, '');
+        return /^[A-Za-z0-9]{4}$/.test(normalized) ? normalized : null;
+    }
+
+    function parseOpenTypeFeatureBlock(value) {
+        if (!isExplicitStyleValue(value)) {
+            return {};
+        }
+
+        const tokens = String(value).trim().split(/\s+/);
+        const features = {};
+        for (let i = 0; i < tokens.length; i += 2) {
+            const tag = normalizeOpenTypeTag(tokens[i]);
+            if (!tag) {
+                continue;
+            }
+            const parsed = parseOpenTypeFeatureValue(tokens[i + 1]);
+            if (parsed !== undefined) {
+                features[tag] = parsed;
+            }
+        }
+        return features;
+    }
+
+    function parseStylisticSets(value) {
+        const parsed = parseStyleNumber(value, null);
+        if (parsed === null || parsed <= 0) {
+            return {};
+        }
+
+        const features = {};
+        for (let index = 1; index <= 20; index++) {
+            if ((parsed & (1 << (index - 1))) !== 0) {
+                features[`ss${String(index).padStart(2, '0')}`] = true;
+            }
+        }
+        return features;
+    }
+
+    function getCapitalizationVariant(value) {
+        if (value === 'SmallCaps') {
+            return {
+                fontVariantCaps: 'small-caps',
+                features: { smcp: true, c2sc: true }
+            };
+        }
+        if (value === 'AllSmallCaps') {
+            return {
+                fontVariantCaps: 'all-small-caps',
+                features: { smcp: true, c2sc: true }
+            };
+        }
+        return {
+            fontVariantCaps: null,
+            features: {}
+        };
+    }
+
+    function getCaseTransform(capitalization) {
+        switch (capitalization) {
+            case 'AllCaps':
+            case 'AllSmallCaps':
+                return 'uppercase';
+            case 'SmallCaps':
+                return 'small-caps';
+            case 'TitleCase':
+                return 'capitalize';
+            default:
+                return 'none';
+        }
+    }
+
+    function transformCharacterCase(character, textTransform, isWordStart) {
+        if (textTransform === 'uppercase') {
+            const upper = character.toUpperCase();
+            return upper.length === character.length ? upper : character;
+        }
+        if (textTransform === 'capitalize' && isWordStart) {
+            const upper = character.toUpperCase();
+            return upper.length === character.length ? upper : character;
+        }
+        return character;
+    }
+
+    function applyCaseTransform(text, capitalization) {
+        const textTransform = getCaseTransform(capitalization);
+        if (textTransform === 'none' || textTransform === 'small-caps') {
+            return text;
+        }
+
+        let transformed = '';
+        let isWordStart = true;
+        for (const character of text) {
+            transformed += transformCharacterCase(character, textTransform, isWordStart);
+            isWordStart = /[\s\-–—/([{]/.test(character);
+        }
+        return transformed.length === text.length ? transformed : text;
+    }
+
+    function resolveOpenTypeFeatures(...sources) {
+        const features = {};
+        const rawProperties = {};
+        let capitalization = 'Normal';
+        let figureStyle = null;
+
+        for (const source of sources) {
+            if (!source) {
+                continue;
+            }
+
+            for (const [property, tag] of Object.entries(OPEN_TYPE_BOOLEAN_FEATURES)) {
+                if (isExplicitStyleValue(source[property])) {
+                    rawProperties[property] = source[property];
+                }
+                const parsed = parseOpenTypeFeatureValue(source[property]);
+                if (parsed !== undefined) {
+                    features[tag] = parsed;
+                }
+            }
+
+            if (isExplicitStyleValue(source.OTFFigureStyle)) {
+                figureStyle = source.OTFFigureStyle;
+                rawProperties.OTFFigureStyle = source.OTFFigureStyle;
+                Object.assign(features, OPEN_TYPE_FIGURE_STYLE_FEATURES[source.OTFFigureStyle] || {});
+            }
+
+            if (isExplicitStyleValue(source.OTFStylisticSets)) {
+                rawProperties.OTFStylisticSets = source.OTFStylisticSets;
+                Object.assign(features, parseStylisticSets(source.OTFStylisticSets));
+            }
+
+            if (isExplicitStyleValue(source.OpenTypeFeatures)) {
+                rawProperties.OpenTypeFeatures = source.OpenTypeFeatures;
+                Object.assign(features, parseOpenTypeFeatureBlock(source.OpenTypeFeatures));
+            }
+
+            if (isExplicitStyleValue(source.Capitalization)) {
+                capitalization = source.Capitalization;
+                rawProperties.Capitalization = source.Capitalization;
+            }
+        }
+
+        const capitalizationVariant = getCapitalizationVariant(capitalization);
+        Object.assign(features, capitalizationVariant.features);
+
+        const openTypeFeatures = Object.keys(features).length > 0 ? features : null;
+        const hasRawProperties = Object.keys(rawProperties).length > 0;
+
+        return {
+            openTypeFeatures,
+            idmlOpenTypeFeatures: openTypeFeatures || hasRawProperties
+                ? {
+                    features: openTypeFeatures,
+                    rawProperties,
+                    capitalization,
+                    figureStyle
+                }
+                : null,
+            fontFeatureSettings: formatFontFeatureSettings(openTypeFeatures),
+            fontVariantCaps: capitalizationVariant.fontVariantCaps,
+            idmlCapitalization: capitalization
+        };
+    }
+
+    function serializeOpenTypeFeatures(features) {
+        if (!features) {
+            return '';
+        }
+        return JSON.stringify(
+            Object.keys(features)
+                .sort()
+                .reduce((acc, key) => {
+                    acc[key] = features[key];
+                    return acc;
+                }, {})
+        );
+    }
+
+    function formatFontFeatureSettings(features) {
+        if (!features) {
+            return null;
+        }
+        return Object.keys(features)
+            .sort()
+            .map(tag => `"${tag}" ${features[tag] === true ? 1 : features[tag] === false ? 0 : features[tag]}`)
+            .join(', ');
     }
 
     function resolveFirstBaseline(textFramePref, fontSize, leading) {
@@ -949,6 +1228,76 @@ async function processIdml(filePath) {
         };
     }
 
+    function normalizeTextPathAlignment(value) {
+        if (!value) return null;
+        if (value.includes('Center')) return 'center';
+        if (value.includes('Right')) return 'right';
+        if (value.includes('Left')) return 'left';
+        return value;
+    }
+
+    function normalizeTextPathBaseline(value) {
+        if (!value) return null;
+        if (value.includes('Baseline')) return 'baseline';
+        if (value.includes('Ascender')) return 'ascender';
+        if (value.includes('Descender')) return 'descender';
+        if (value.includes('Center')) return 'center';
+        return value;
+    }
+
+    function getTextPathMetadata(textPath, pageItem) {
+        const startOffsetPt = parseStyleNumber(textPath.getAttribute('StartBracket'), 0) || 0;
+        const endOffsetPt = parseStyleNumber(textPath.getAttribute('EndBracket'), 0) || 0;
+        const pathSpacingPt = parseStyleNumber(textPath.getAttribute('PathSpacing'), 0) || 0;
+        const pathAlignment = textPath.getAttribute('PathAlignment');
+        const textAlignment = textPath.getAttribute('TextAlignment');
+        const flipPathEffect = textPath.getAttribute('FlipPathEffect');
+
+        return {
+            id: textPath.getAttribute('Self') || null,
+            parentStory: textPath.getAttribute('ParentStory') || null,
+            pathAlignment,
+            alignment: normalizeTextPathAlignment(pathAlignment),
+            textAlignment,
+            baselineAlignment: normalizeTextPathBaseline(textAlignment),
+            pathEffect: textPath.getAttribute('PathEffect') || null,
+            flipPathEffect,
+            isFlipped: flipPathEffect && flipPathEffect !== 'NotFlipped',
+            pathSpacingPt,
+            pathSpacingPx: pt_px(pathSpacingPt),
+            startOffsetPt,
+            startOffsetPx: pt_px(startOffsetPt),
+            endOffsetPt,
+            endOffsetPx: pt_px(endOffsetPt),
+            previousTextFrame: normalizeFrameRef(textPath.getAttribute('PreviousTextFrame')),
+            nextTextFrame: normalizeFrameRef(textPath.getAttribute('NextTextFrame')),
+            sourcePath: pageItem.path || null,
+            sourcePoints: pageItem.points || null
+        };
+    }
+
+    function buildTextPathTextbox(pageItem, textPath, storyData) {
+        const metadata = getTextPathMetadata(textPath, pageItem);
+        const textPathCharSpacing = storyData.charSpacing !== undefined
+            ? storyData.charSpacing
+            : resolveTracking(storyData.tracking);
+
+        return {
+            ...pageItem,
+            type: 'Textbox',
+            text: storyData.text,
+            styles: storyData.styles,
+            charSpacing: textPathCharSpacing,
+            ...storyData,
+            textPath: metadata,
+            idmlTextPath: metadata,
+            textPathStartOffset: metadata.startOffsetPx,
+            textPathEndOffset: metadata.endOffsetPx,
+            textPathBaselineAlignment: metadata.baselineAlignment,
+            textPathAlignment: metadata.alignment
+        };
+    }
+
     function chooseStorySplitIndex(text, targetIndex, minIndex, maxIndex) {
         if (targetIndex <= minIndex) {
             return minIndex;
@@ -984,12 +1333,14 @@ async function processIdml(filePath) {
         let baseStyle = allCharStyles.find(style => style !== null && style !== undefined);
         if (!baseStyle) {
             const fallbackFill = pItems.fillColor ? get_color(pItems.fillColor, graphicDOM) : null;
+            const fallbackScript = resolveScriptStyle(pItems.position, pItems.baselineShift, pItems.fontSize);
             baseStyle = {
                 fontFamily: pItems.font || 'Minion Pro',
                 fill: fallbackFill ? fallbackFill.rgb : "rgb(0, 0, 0)",
                 cmyk: fallbackFill ? fallbackFill.cmyk : "[0, 0, 0, 100]",
                 fontWeight: pItems.fontWeight || 'Regular',
-                fontSize: pItems.fontSize || '12',
+                fontSize: fallbackScript.fontSize,
+                idmlPointSize: fallbackScript.idmlPointSize,
                 strokeWeight: pItems.strokeWeight || '0',
                 stroke: "rgb(0, 0, 0)",
                 charSpacing: resolveTracking(pItems.tracking),
@@ -1000,8 +1351,21 @@ async function processIdml(filePath) {
                 idmlKerningMethod: pItems.kerningMethod || null,
                 idmlKerningValue: pItems.kerningValue || null,
                 kerning: resolveKerningValue(pItems.kerningValue),
-                idmlBaselineShift: resolveBaselineShift(pItems.position, pItems.baselineShift, pItems.fontSize).idmlBaselineShift,
-                deltaY: resolveBaselineShift(pItems.position, pItems.baselineShift, pItems.fontSize).deltaY,
+                idmlPosition: fallbackScript.idmlPosition,
+                scriptPosition: fallbackScript.scriptPosition,
+                scriptScale: fallbackScript.scriptScale,
+                idmlScriptSizePercent: fallbackScript.idmlScriptSizePercent,
+                idmlScriptPositionPercent: fallbackScript.idmlScriptPositionPercent,
+                idmlBaselineShift: fallbackScript.idmlBaselineShift,
+                deltaY: fallbackScript.deltaY,
+                baselineShiftSource: fallbackScript.baselineShiftSource,
+                openTypeFeatures: pItems.openTypeFeatures || null,
+                idmlOpenTypeFeatures: pItems.idmlOpenTypeFeatures || null,
+                fontFeatureSettings: pItems.fontFeatureSettings || null,
+                fontVariantCaps: pItems.fontVariantCaps || null,
+                idmlCapitalization: pItems.idmlCapitalization || pItems.capitalization || 'Normal',
+                textTransform: getCaseTransform(pItems.idmlCapitalization || pItems.capitalization),
+                idmlCaseTransform: pItems.idmlCapitalization || pItems.capitalization || 'Normal',
                 underline: false,
                 capitalization: 'Normal',
                 position: 'Normal',
@@ -1035,6 +1399,9 @@ async function processIdml(filePath) {
             }
             if (currentStyle.fontSize !== baseStyle.fontSize) {
                 styleChanges.fontSize = pt_px(currentStyle.fontSize);
+            }
+            if (currentStyle.idmlPointSize !== baseStyle.idmlPointSize) {
+                styleChanges.idmlPointSize = currentStyle.idmlPointSize;
             }
             if (currentStyle.strokeWeight !== baseStyle.strokeWeight) {
                 styleChanges.strokeWeight = pt_px(currentStyle.strokeWeight);
@@ -1072,6 +1439,44 @@ async function processIdml(filePath) {
             if (currentStyle.idmlBaselineShift !== baseStyle.idmlBaselineShift) {
                 styleChanges.idmlBaselineShift = currentStyle.idmlBaselineShift;
             }
+            if (currentStyle.baselineShiftSource !== baseStyle.baselineShiftSource) {
+                styleChanges.baselineShiftSource = currentStyle.baselineShiftSource;
+            }
+            if (currentStyle.idmlPosition !== baseStyle.idmlPosition) {
+                styleChanges.idmlPosition = currentStyle.idmlPosition;
+            }
+            if (currentStyle.scriptPosition !== baseStyle.scriptPosition) {
+                styleChanges.scriptPosition = currentStyle.scriptPosition;
+            }
+            if (currentStyle.scriptScale !== baseStyle.scriptScale) {
+                styleChanges.scriptScale = currentStyle.scriptScale;
+            }
+            if (currentStyle.idmlScriptSizePercent !== baseStyle.idmlScriptSizePercent) {
+                styleChanges.idmlScriptSizePercent = currentStyle.idmlScriptSizePercent;
+            }
+            if (currentStyle.idmlScriptPositionPercent !== baseStyle.idmlScriptPositionPercent) {
+                styleChanges.idmlScriptPositionPercent = currentStyle.idmlScriptPositionPercent;
+            }
+            if (
+                serializeOpenTypeFeatures(currentStyle.openTypeFeatures) !== serializeOpenTypeFeatures(baseStyle.openTypeFeatures) ||
+                serializeOpenTypeFeatures(currentStyle.idmlOpenTypeFeatures) !== serializeOpenTypeFeatures(baseStyle.idmlOpenTypeFeatures)
+            ) {
+                styleChanges.openTypeFeatures = currentStyle.openTypeFeatures;
+                styleChanges.idmlOpenTypeFeatures = currentStyle.idmlOpenTypeFeatures;
+                styleChanges.fontFeatureSettings = currentStyle.fontFeatureSettings;
+            }
+            if (currentStyle.fontVariantCaps !== baseStyle.fontVariantCaps) {
+                styleChanges.fontVariantCaps = currentStyle.fontVariantCaps;
+            }
+            if (currentStyle.idmlCapitalization !== baseStyle.idmlCapitalization) {
+                styleChanges.idmlCapitalization = currentStyle.idmlCapitalization;
+            }
+            if (currentStyle.textTransform !== baseStyle.textTransform) {
+                styleChanges.textTransform = currentStyle.textTransform;
+            }
+            if (currentStyle.idmlCaseTransform !== baseStyle.idmlCaseTransform) {
+                styleChanges.idmlCaseTransform = currentStyle.idmlCaseTransform;
+            }
             if (currentStyle.underline !== baseStyle.underline) {
                 styleChanges.underline = currentStyle.underline;
             }
@@ -1098,6 +1503,7 @@ async function processIdml(filePath) {
             strokeColor: baseStyle.stroke,
             fontStyle: baseStyle.fontWeight,
             fontSize: baseStyle.fontSize,
+            idmlPointSize: baseStyle.idmlPointSize,
             strokeWeight: baseStyle.strokeWeight,
             leading: pickStyleValue(baseStyle.leading, pItems.leading, 'Auto'),
             lineHeight: pickStyleValue(baseStyle.lineHeight, resolveLeading(pItems.leading, pItems.fontSize).lineHeight, 1.13),
@@ -1108,6 +1514,19 @@ async function processIdml(filePath) {
             kerning: baseStyle.kerning,
             baselineShift: baseStyle.idmlBaselineShift,
             deltaY: baseStyle.deltaY,
+            baselineShiftSource: baseStyle.baselineShiftSource,
+            idmlPosition: baseStyle.idmlPosition,
+            scriptPosition: baseStyle.scriptPosition,
+            scriptScale: baseStyle.scriptScale,
+            idmlScriptSizePercent: baseStyle.idmlScriptSizePercent,
+            idmlScriptPositionPercent: baseStyle.idmlScriptPositionPercent,
+            openTypeFeatures: baseStyle.openTypeFeatures,
+            idmlOpenTypeFeatures: baseStyle.idmlOpenTypeFeatures,
+            fontFeatureSettings: baseStyle.fontFeatureSettings,
+            fontVariantCaps: baseStyle.fontVariantCaps,
+            idmlCapitalization: baseStyle.idmlCapitalization,
+            textTransform: baseStyle.textTransform,
+            idmlCaseTransform: baseStyle.idmlCaseTransform,
             justification: pItems.justification,
             cmyk: baseStyle.cmyk,
             spot: baseStyle.spot,
@@ -1255,6 +1674,7 @@ async function processIdml(filePath) {
             styles,
             font,
             fontSize,
+            idmlPointSize,
             leading,
             lineHeight,
             tracking,
@@ -1264,6 +1684,19 @@ async function processIdml(filePath) {
             kerning,
             baselineShift,
             deltaY,
+            baselineShiftSource,
+            idmlPosition,
+            scriptPosition,
+            scriptScale,
+            idmlScriptSizePercent,
+            idmlScriptPositionPercent,
+            openTypeFeatures,
+            idmlOpenTypeFeatures,
+            fontFeatureSettings,
+            fontVariantCaps,
+            idmlCapitalization,
+            textTransform,
+            idmlCaseTransform,
             justification,
             fontStyle,
             strokeWeight,
@@ -1299,7 +1732,6 @@ async function processIdml(filePath) {
 
         const finalTextAlign = justification === 'CenterAlign' || justification === 'CenterJustified' ? 'center' : justification === 'RightAlign' ? 'right' : 'left';
         const finalFontWeight = fontStyle ? (fontStyle.includes('Black') ? 'Bold' : fontStyle === 'No Font Style' ? 'Regular' : fontStyle) : 'Regular';
-        const finalCapitalization = capitalization === 'AllCaps';
 
         const newLineCount = (text.match(/\n/g) || []).length + 1;
         const trueHeight = (pt_px(finalFontSize) * newLineCount) * finalLineHeight;
@@ -1333,12 +1765,13 @@ async function processIdml(filePath) {
             width: pt_px(width),
             height: pt_px(height),
             Name: itemElement.getAttribute('Name'),
-            text: finalCapitalization ? text.toUpperCase() : text,
+            text: text,
             textAlign: finalTextAlign,
             parent_story: parentStory,
             shadow: dropShadowSettings,
             fontWeight: finalFontWeight,
             fontSize: pt_px(finalFontSize),
+            idmlPointSize: idmlPointSize,
             lineHeight: finalLineHeight,
             charSpacing: charSpacing !== undefined ? charSpacing : parseTrackingValue(tracking),
             idmlTracking: tracking,
@@ -1348,6 +1781,19 @@ async function processIdml(filePath) {
             kerning: kerning,
             idmlBaselineShift: baselineShift,
             deltaY: deltaY,
+            baselineShiftSource: baselineShiftSource,
+            idmlPosition: idmlPosition,
+            scriptPosition: scriptPosition,
+            scriptScale: scriptScale,
+            idmlScriptSizePercent: idmlScriptSizePercent,
+            idmlScriptPositionPercent: idmlScriptPositionPercent,
+            openTypeFeatures: openTypeFeatures,
+            idmlOpenTypeFeatures: idmlOpenTypeFeatures,
+            fontFeatureSettings: fontFeatureSettings,
+            fontVariantCaps: fontVariantCaps,
+            idmlCapitalization: idmlCapitalization,
+            textTransform: textTransform,
+            idmlCaseTransform: idmlCaseTransform,
             idmlFirstBaselineOffset: firstBaseline.mode,
             idmlMinimumFirstBaselineOffset: firstBaseline.minimumOffset,
             firstBaselineOffsetPt: firstBaseline.offsetPt,
@@ -1432,6 +1878,11 @@ async function processIdml(filePath) {
             const paraKerningMethod = pickStyleValue(paraOverrides.KerningMethod, paraStyle.KerningMethod, null);
             const paraKerningValue = pickStyleValue(paraOverrides.KerningValue, paraStyle.KerningValue, null);
             const paraBaselineShift = pickStyleValue(paraOverrides.BaselineShift, paraStyle.BaselineShift, null);
+            const paraOpenType = resolveOpenTypeFeatures(
+                paraStyle,
+                paraOverrides,
+                { Capitalization: paraCapitalization }
+            );
 
             // Store resolved paragraph values for this range
             pItems = {
@@ -1449,7 +1900,12 @@ async function processIdml(filePath) {
                 position: paraPosition,
                 kerningMethod: paraKerningMethod,
                 kerningValue: paraKerningValue,
-                baselineShift: paraBaselineShift
+                baselineShift: paraBaselineShift,
+                openTypeFeatures: paraOpenType.openTypeFeatures,
+                idmlOpenTypeFeatures: paraOpenType.idmlOpenTypeFeatures,
+                fontFeatureSettings: paraOpenType.fontFeatureSettings,
+                fontVariantCaps: paraOpenType.fontVariantCaps,
+                idmlCapitalization: paraOpenType.idmlCapitalization
             };
 
             const charStyleRanges = Array.from(paraRange.getElementsByTagName('CharacterStyleRange'));
@@ -1467,7 +1923,6 @@ async function processIdml(filePath) {
                         allCharStyles.push(null); // Linebreak has no style
                     } else {
                         const contentText = contentNode.textContent;
-                        text += contentText;
 
                         // Full cascade: inline charRange attr > charStyle def > paragraph resolved
                         const font = pickStyleValue(charOverrides.AppliedFont, charStyleDef.AppliedFont, pItems.font);
@@ -1489,7 +1944,17 @@ async function processIdml(filePath) {
                         const fillColorObj = fill ? get_color(fill, graphicDOM) : null;
                         const strokeColorObj = strokeColor ? get_color(strokeColor, graphicDOM) : null;
                         const resolvedLeading = resolveLeading(leading, fontSize);
-                        const resolvedBaselineShift = resolveBaselineShift(position, baselineShift, fontSize);
+                        const resolvedScript = resolveScriptStyle(position, baselineShift, fontSize);
+                        const textTransform = getCaseTransform(capitalization);
+                        const idmlCaseTransform = capitalization || 'Normal';
+                        const transformedText = applyCaseTransform(contentText, capitalization);
+                        const openType = resolveOpenTypeFeatures(
+                            paraStyle,
+                            paraOverrides,
+                            charStyleDef,
+                            charOverrides,
+                            { Capitalization: capitalization }
+                        );
 
                         // Create full style object for this range
                         const rangeStyle = {
@@ -1497,7 +1962,8 @@ async function processIdml(filePath) {
                             fill: fillColorObj ? fillColorObj.rgb : "rgb(0, 0, 0)",
                             cmyk: fillColorObj ? fillColorObj.cmyk : "[0, 0, 0, 100]",
                             fontWeight: fontWeight,
-                            fontSize: fontSize,
+                            fontSize: resolvedScript.fontSize,
+                            idmlPointSize: resolvedScript.idmlPointSize,
                             strokeWeight: strokeWeight,
                             stroke: strokeColorObj ? strokeColorObj.rgb : "rgb(0, 0, 0)",
                             charSpacing: resolveTracking(tracking),
@@ -1508,16 +1974,31 @@ async function processIdml(filePath) {
                             idmlKerningMethod: kerningMethod,
                             idmlKerningValue: kerningValue,
                             kerning: resolveKerningValue(kerningValue),
-                            idmlBaselineShift: resolvedBaselineShift.idmlBaselineShift,
-                            deltaY: resolvedBaselineShift.deltaY,
+                            idmlPosition: resolvedScript.idmlPosition,
+                            scriptPosition: resolvedScript.scriptPosition,
+                            scriptScale: resolvedScript.scriptScale,
+                            idmlScriptSizePercent: resolvedScript.idmlScriptSizePercent,
+                            idmlScriptPositionPercent: resolvedScript.idmlScriptPositionPercent,
+                            idmlBaselineShift: resolvedScript.idmlBaselineShift,
+                            deltaY: resolvedScript.deltaY,
+                            baselineShiftSource: resolvedScript.baselineShiftSource,
+                            openTypeFeatures: openType.openTypeFeatures,
+                            idmlOpenTypeFeatures: openType.idmlOpenTypeFeatures,
+                            fontFeatureSettings: openType.fontFeatureSettings,
+                            fontVariantCaps: openType.fontVariantCaps,
+                            idmlCapitalization: openType.idmlCapitalization,
+                            textTransform: textTransform,
+                            idmlCaseTransform: idmlCaseTransform,
                             underline: underline === 'true',
                             capitalization: capitalization,
                             position: position,
                             spot: spot
                         };
 
+                        text += transformedText;
+
                         // Store this style for each character in the range
-                        for (let i = 0; i < contentText.length; i++) {
+                        for (let i = 0; i < transformedText.length; i++) {
                             allCharStyles.push(rangeStyle);
                         }
                     }
@@ -1532,7 +2013,7 @@ async function processIdml(filePath) {
         );
         storyDataCache.set(parentStory, storyData);
         return storyData;
-    } async function getPolygon(itemElement, stylesDOM, graphicDOM, parent) {
+    } async function getPolygon(itemElement, stylesDOM, graphicDOM, zip, parseXml, parent) {
         const attrib = itemElement.attributes;
         const objectStyle = applyObjStyles(itemElement, stylesDOM);
         const pathPoints = Array.from(itemElement.getElementsByTagName('PathPointType'));
@@ -1583,18 +2064,7 @@ async function processIdml(filePath) {
         if (textPath) {
             const parentStory = textPath.getAttribute('ParentStory');
             const storyData = await get_story_data(parentStory, zip, stylesDOM, graphicDOM, parseXml);
-            const textPathTracking = storyData.tracking;
-            const textPathCharSpacing = textPathTracking === 'No Tracking'
-                ? 0
-                : (Number.isFinite(parseFloat(textPathTracking)) ? parseFloat(textPathTracking) : 0);
-            return {
-                ...pageItem,
-                type: 'Textbox',
-                text: storyData.text,
-                styles: storyData.styles,
-                charSpacing: textPathCharSpacing,
-                ...storyData
-            };
+            return buildTextPathTextbox(pageItem, textPath, storyData);
         }
 
         return pageItem;
@@ -1788,18 +2258,7 @@ async function processIdml(filePath) {
         if (textPath) {
             const parentStory = textPath.getAttribute('ParentStory');
             const storyData = await get_story_data(parentStory, zip, stylesDOM, graphicDOM, parseXml);
-            const textPathTracking = storyData.tracking;
-            const textPathCharSpacing = textPathTracking === 'No Tracking'
-                ? 0
-                : (Number.isFinite(parseFloat(textPathTracking)) ? parseFloat(textPathTracking) : 0);
-            return {
-                ...pageItem,
-                type: 'Textbox',
-                text: storyData.text,
-                styles: storyData.styles,
-                charSpacing: textPathCharSpacing,
-                ...storyData
-            };
+            return buildTextPathTextbox(pageItem, textPath, storyData);
         }
 
         return pageItem;
