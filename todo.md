@@ -21,9 +21,9 @@
 
 ## 3) Text fidelity
 
-- [ ] Threaded story flow across linked text frames
-- [ ] Paragraph/character style inheritance + overrides
-- [ ] Kerning/tracking/leading/baseline shift mapping
+- [x] Threaded story flow across linked text frames (estimated split with diagnostics)
+- [x] Paragraph/character style inheritance + overrides
+- [x] Kerning/tracking/leading/baseline shift mapping
 - [ ] First baseline behavior parity
 - [ ] Text-on-path baseline/alignment/start-offset parity
 - [ ] OpenType features (ligatures, small caps, etc.)

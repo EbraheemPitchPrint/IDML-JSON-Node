@@ -1,4 +1,9 @@
 const charStyleCache = new Map();
+const {
+    extractStyleProperties,
+    getBasedOnReference,
+    normalizeStyleReference
+} = require('./styleUtils');
 
 /**
  * Clears the character style cache. Should be called between processing different IDML files.
@@ -17,38 +22,12 @@ function clearCharacterStyleCache() {
  * @returns {Object} All extracted style properties.
  */
 function getStyleProperties(styleElement) {
-    const properties = {};
-
-    // Metadata attributes to skip (not style properties)
     const skipAttrs = new Set([
         'Self', 'Name', 'Imported', 'SplitDocument', 'EmitCss', 'StyleUniqueId',
         'IncludeClass', 'ExtendedKeyboardShortcut', 'KeyboardShortcut', 'BasedOn'
     ]);
-
-    // 1. Read all XML attributes from the element
-    for (let i = 0; i < styleElement.attributes.length; i++) {
-        const attr = styleElement.attributes[i];
-        if (!skipAttrs.has(attr.name)) {
-            properties[attr.name] = attr.value;
-        }
-    }
-
-    // 2. Read child <Properties> element values
-    const propsElements = styleElement.getElementsByTagName('Properties');
-    if (propsElements.length > 0) {
-        const propsElement = propsElements[0];
-        for (let i = 0; i < propsElement.childNodes.length; i++) {
-            const child = propsElement.childNodes[i];
-            if (child.nodeType === 1) { // Element node
-                if (child.tagName === 'BasedOn' || child.tagName === 'PreviewColor') {
-                    continue;
-                }
-                properties[child.tagName] = child.textContent;
-            }
-        }
-    }
-
-    return properties;
+    const skipPropertyTags = new Set(['BasedOn', 'PreviewColor']);
+    return extractStyleProperties(styleElement, { skipAttrs, skipPropertyTags });
 }
 
 /**
@@ -59,19 +38,7 @@ function getStyleProperties(styleElement) {
  * @returns {string|null} The BasedOn style reference, or null.
  */
 function getBasedOn(styleElement) {
-    const attrBasedOn = styleElement.getAttribute('BasedOn');
-    if (attrBasedOn) return attrBasedOn;
-
-    const propsElements = styleElement.getElementsByTagName('Properties');
-    if (propsElements.length > 0) {
-        const basedOnElements = propsElements[0].getElementsByTagName('BasedOn');
-        if (basedOnElements.length > 0) {
-            const value = basedOnElements[0].textContent;
-            if (value) return value;
-        }
-    }
-
-    return null;
+    return getBasedOnReference(styleElement);
 }
 
 /**
@@ -82,37 +49,29 @@ function getBasedOn(styleElement) {
  * @returns {Object} The fully resolved style properties.
  */
 function getCharacterStyle(styleName, stylesDOM) {
-    if (!styleName) return {};
+    const normalizedStyleName = normalizeStyleReference(
+        styleName,
+        'CharacterStyle/',
+        '$ID/[No character style]'
+    );
+    if (!normalizedStyleName) return {};
 
-    if (charStyleCache.has(styleName)) {
-        return charStyleCache.get(styleName);
+    if (charStyleCache.has(normalizedStyleName)) {
+        return charStyleCache.get(normalizedStyleName);
     }
 
     const styleElements = stylesDOM.getElementsByTagName('CharacterStyle');
     let styleElement = null;
-    let resolvedName = styleName;
 
     for (let i = 0; i < styleElements.length; i++) {
-        if (styleElements[i].getAttribute('Self') === styleName) {
+        if (styleElements[i].getAttribute('Self') === normalizedStyleName) {
             styleElement = styleElements[i];
             break;
         }
     }
 
-    // Try with "CharacterStyle/" prefix if not found
-    if (!styleElement && !styleName.startsWith('CharacterStyle/')) {
-        const prefixed = 'CharacterStyle/' + styleName;
-        for (let i = 0; i < styleElements.length; i++) {
-            if (styleElements[i].getAttribute('Self') === prefixed) {
-                styleElement = styleElements[i];
-                resolvedName = prefixed;
-                break;
-            }
-        }
-    }
-
     if (!styleElement) {
-        charStyleCache.set(styleName, {});
+        charStyleCache.set(normalizedStyleName, {});
         return {};
     }
 
@@ -122,18 +81,13 @@ function getCharacterStyle(styleName, stylesDOM) {
     let resolvedStyle;
 
     if (basedOn) {
-        let basedOnFull = basedOn;
-        if (!basedOn.startsWith('CharacterStyle/') && basedOn.startsWith('$ID/')) {
-            basedOnFull = 'CharacterStyle/' + basedOn;
-        }
-
-        const baseStyle = getCharacterStyle(basedOnFull, stylesDOM);
+        const baseStyle = getCharacterStyle(basedOn, stylesDOM);
         resolvedStyle = { ...baseStyle, ...ownProperties };
     } else {
         resolvedStyle = { ...ownProperties };
     }
 
-    charStyleCache.set(styleName, resolvedStyle);
+    charStyleCache.set(normalizedStyleName, resolvedStyle);
     return resolvedStyle;
 }
 

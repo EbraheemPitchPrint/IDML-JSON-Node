@@ -8,6 +8,7 @@ const { applyCharStyles, getCharacterStyle, clearCharacterStyleCache } = require
 const { applyParaStyles, getParagraphStyle, clearParagraphStyleCache } = require('./paragraphStyles.js');
 const { applyObjStyles, clearObjectStyleCache } = require('./objectStyles.js');
 const { pt_px, multiplyAffineMatrices, decomposeTransform } = require('./utils.js');
+const { extractStyleProperties, pickStyleValue } = require('./styleUtils.js');
 
 /**
  * Processes an IDML file and extracts its content into a JSON structure.
@@ -88,6 +89,124 @@ async function processIdml(filePath) {
     }
 
     const documentData = getDocumentData(preferencesDOM);
+    const storyDataCache = new Map();
+    const threadedTextFrameMap = new Map();
+    const threadedTextFrameChains = new Map();
+    const storyThreadSegmentsCache = new Map();
+
+    function normalizeFrameRef(value) {
+        return value && value !== 'n' ? value : null;
+    }
+
+    function readPathBounds(itemElement) {
+        const pathPoints = Array.from(itemElement.getElementsByTagName('PathPointType'));
+        const anchors = pathPoints
+            .map(point => {
+                const value = point.getAttribute('Anchor') || point.getAttribute('LeftDirection');
+                return value ? value.split(' ').map(parseFloat) : null;
+            })
+            .filter(Boolean);
+
+        if (anchors.length === 0) {
+            return { width: 0, height: 0 };
+        }
+
+        const xValues = anchors.map(point => point[0]);
+        const yValues = anchors.map(point => point[1]);
+
+        return {
+            width: Math.abs(Math.max(...xValues) - Math.min(...xValues)),
+            height: Math.abs(Math.max(...yValues) - Math.min(...yValues))
+        };
+    }
+
+    function getTextFrameMetrics(frameElement, spreadPath, order) {
+        const bounds = readPathBounds(frameElement);
+        const textFramePref = frameElement.getElementsByTagName('TextFramePreference')[0];
+
+        return {
+            self: frameElement.getAttribute('Self'),
+            parentStory: frameElement.getAttribute('ParentStory'),
+            previous: normalizeFrameRef(frameElement.getAttribute('PreviousTextFrame')),
+            next: normalizeFrameRef(frameElement.getAttribute('NextTextFrame')),
+            spreadPath,
+            order,
+            width: bounds.width,
+            height: bounds.height,
+            columnCount: textFramePref ? parseInt(textFramePref.getAttribute('TextColumnCount') || '1', 10) : 1,
+            columnGutter: textFramePref ? parseFloat(textFramePref.getAttribute('TextColumnGutter') || '0') : 0,
+            fixedColumnWidth: textFramePref ? parseFloat(textFramePref.getAttribute('TextColumnFixedWidth') || '0') : 0
+        };
+    }
+
+    function hasThreadLink(frame) {
+        return Boolean(frame.previous || frame.next);
+    }
+
+    function buildThreadedTextFrameMap(spreadEntries) {
+        const framesByStory = new Map();
+        let order = 0;
+
+        for (const spreadEntry of spreadEntries) {
+            const frameElements = Array.from(spreadEntry.spreadElement.getElementsByTagName('TextFrame'));
+            for (const frameElement of frameElements) {
+                const frame = getTextFrameMetrics(frameElement, spreadEntry.spreadPath, order++);
+                if (!frame.self || !frame.parentStory) {
+                    continue;
+                }
+                if (!framesByStory.has(frame.parentStory)) {
+                    framesByStory.set(frame.parentStory, []);
+                }
+                framesByStory.get(frame.parentStory).push(frame);
+            }
+        }
+
+        for (const [storyId, frames] of framesByStory.entries()) {
+            if (!frames.some(hasThreadLink)) {
+                continue;
+            }
+
+            const frameById = new Map(frames.map(frame => [frame.self, frame]));
+            const visited = new Set();
+            const starts = frames
+                .filter(frame => !frame.previous || !frameById.has(frame.previous))
+                .sort((a, b) => a.order - b.order);
+
+            if (starts.length === 0) {
+                starts.push(...frames.slice().sort((a, b) => a.order - b.order));
+            }
+
+            let chainIndex = 0;
+            for (const start of starts) {
+                if (visited.has(start.self)) {
+                    continue;
+                }
+
+                const chain = [];
+                let current = start;
+                while (current && !visited.has(current.self)) {
+                    chain.push(current);
+                    visited.add(current.self);
+                    current = current.next ? frameById.get(current.next) : null;
+                }
+
+                if (chain.length <= 1) {
+                    continue;
+                }
+
+                const chainId = `${storyId}:${chainIndex++}`;
+                threadedTextFrameChains.set(chainId, chain);
+                chain.forEach((frame, frameIndex) => {
+                    threadedTextFrameMap.set(frame.self, {
+                        storyId,
+                        chainId,
+                        frameIndex,
+                        chainLength: chain.length
+                    });
+                });
+            }
+        }
+    }
 
     // Get spread paths - check for both namespaced and non-namespaced elements
     let spreadElements = designmapDOM.getElementsByTagName('Spread');
@@ -694,6 +813,357 @@ async function processIdml(filePath) {
         return pageItem;
     }
 
+    function estimateTextFrameCapacity(frame, storyData) {
+        const fontSize = parseFloat(storyData.fontSize) || 12;
+        const leading = parseFloat(storyData.leading);
+        const tracking = parseFloat(storyData.tracking);
+        const lineHeight = Number.isFinite(leading) && leading > 0
+            ? (leading > 3 ? leading : fontSize * leading)
+            : fontSize * 1.13;
+        const columnCount = Math.max(1, Number.isFinite(frame.columnCount) ? frame.columnCount : 1);
+        const gutter = Number.isFinite(frame.columnGutter) ? frame.columnGutter : 0;
+        const fixedColumnWidth = Number.isFinite(frame.fixedColumnWidth) ? frame.fixedColumnWidth : 0;
+        const columnWidth = fixedColumnWidth > 0
+            ? fixedColumnWidth
+            : Math.max(1, (frame.width - (gutter * (columnCount - 1))) / columnCount);
+        const trackingWidth = Number.isFinite(tracking) ? (tracking / 1000) * fontSize : 0;
+        const averageCharWidth = Math.max(fontSize * 0.35, (fontSize * 0.5) + trackingWidth);
+        const charsPerLine = Math.max(1, Math.floor(columnWidth / averageCharWidth));
+        const linesPerColumn = Math.max(1, Math.floor(frame.height / Math.max(lineHeight, 1)));
+
+        return Math.max(1, charsPerLine * linesPerColumn * columnCount);
+    }
+
+    function parseStyleNumber(value, fallback = null) {
+        if (value === null || value === undefined || value === '' || value === 'Auto' || value === 'No Tracking') {
+            return fallback;
+        }
+        const parsed = parseFloat(value);
+        return Number.isFinite(parsed) ? parsed : fallback;
+    }
+
+    function resolveTracking(value) {
+        return parseStyleNumber(value, 0);
+    }
+
+    function resolveLeading(value, fontSize) {
+        const parsedLeading = parseStyleNumber(value, null);
+        const parsedFontSize = parseStyleNumber(fontSize, 12) || 12;
+
+        if (parsedLeading === null || parsedLeading <= 0) {
+            return {
+                idmlLeading: value || 'Auto',
+                lineHeight: 1.13,
+                leadingPx: pt_px(parsedFontSize * 1.13)
+            };
+        }
+
+        const lineHeight = parsedLeading > 3 && parsedFontSize > 0
+            ? Number((parsedLeading / parsedFontSize).toFixed(3))
+            : parsedLeading;
+
+        return {
+            idmlLeading: value,
+            lineHeight,
+            leadingPx: pt_px(parsedLeading > 3 ? parsedLeading : parsedFontSize * parsedLeading)
+        };
+    }
+
+    function resolveBaselineShift(position, baselineShift, fontSize) {
+        const parsedShift = parseStyleNumber(baselineShift, null);
+        const parsedFontSize = parseStyleNumber(fontSize, 12) || 12;
+        let shiftPt = parsedShift || 0;
+
+        if (parsedShift === null) {
+            if (position === 'Superscript') {
+                shiftPt = parsedFontSize * 0.33;
+            } else if (position === 'Subscript') {
+                shiftPt = -parsedFontSize * 0.2;
+            }
+        }
+
+        return {
+            idmlBaselineShift: shiftPt,
+            deltaY: shiftPt === 0 ? 0 : -pt_px(shiftPt)
+        };
+    }
+
+    function resolveKerningValue(value) {
+        const parsed = parseStyleNumber(value, null);
+        if (parsed === null || Math.abs(parsed) > 10000) {
+            return null;
+        }
+        return parsed;
+    }
+
+    function chooseStorySplitIndex(text, targetIndex, minIndex, maxIndex) {
+        if (targetIndex <= minIndex) {
+            return minIndex;
+        }
+        if (targetIndex >= maxIndex) {
+            return maxIndex;
+        }
+
+        const clampedTarget = Math.max(minIndex + 1, Math.min(maxIndex - 1, targetIndex));
+        const searchRadius = Math.max(20, Math.floor(text.length * 0.05));
+        let bestIndex = clampedTarget;
+        let bestDistance = Number.POSITIVE_INFINITY;
+
+        for (
+            let i = Math.max(minIndex + 1, clampedTarget - searchRadius);
+            i <= Math.min(maxIndex - 1, clampedTarget + searchRadius);
+            i++
+        ) {
+            if (!/\s/.test(text[i])) {
+                continue;
+            }
+            const distance = Math.abs(i - clampedTarget);
+            if (distance < bestDistance) {
+                bestIndex = i + 1;
+                bestDistance = distance;
+            }
+        }
+
+        return bestIndex;
+    }
+
+    function buildStoryDataFromResolvedStyles(text, allCharStyles, pItems, graphicDOM) {
+        let baseStyle = allCharStyles.find(style => style !== null && style !== undefined);
+        if (!baseStyle) {
+            const fallbackFill = pItems.fillColor ? get_color(pItems.fillColor, graphicDOM) : null;
+            baseStyle = {
+                fontFamily: pItems.font || 'Minion Pro',
+                fill: fallbackFill ? fallbackFill.rgb : "rgb(0, 0, 0)",
+                cmyk: fallbackFill ? fallbackFill.cmyk : "[0, 0, 0, 100]",
+                fontWeight: pItems.fontWeight || 'Regular',
+                fontSize: pItems.fontSize || '12',
+                strokeWeight: pItems.strokeWeight || '0',
+                stroke: "rgb(0, 0, 0)",
+                charSpacing: resolveTracking(pItems.tracking),
+                leading: pItems.leading || 'Auto',
+                lineHeight: resolveLeading(pItems.leading, pItems.fontSize).lineHeight,
+                idmlLeading: pItems.leading || 'Auto',
+                idmlTracking: pItems.tracking || '0',
+                idmlKerningMethod: pItems.kerningMethod || null,
+                idmlKerningValue: pItems.kerningValue || null,
+                kerning: resolveKerningValue(pItems.kerningValue),
+                idmlBaselineShift: resolveBaselineShift(pItems.position, pItems.baselineShift, pItems.fontSize).idmlBaselineShift,
+                deltaY: resolveBaselineShift(pItems.position, pItems.baselineShift, pItems.fontSize).deltaY,
+                underline: false,
+                capitalization: 'Normal',
+                position: 'Normal',
+                spot: null
+            };
+        }
+
+        const styles = {};
+
+        for (let i = 0; i < allCharStyles.length; i++) {
+            const currentStyle = allCharStyles[i];
+
+            if (currentStyle === null || currentStyle === undefined) {
+                continue;
+            }
+
+            const styleChanges = {};
+
+            if (currentStyle.fontFamily !== baseStyle.fontFamily) {
+                styleChanges.fontFamily = currentStyle.fontFamily;
+                styleChanges.fontWeight = currentStyle.fontWeight;
+            }
+            if (currentStyle.fill !== baseStyle.fill) {
+                styleChanges.fill = currentStyle.fill;
+            }
+            if (currentStyle.cmyk !== baseStyle.cmyk) {
+                styleChanges.cmyk = currentStyle.cmyk;
+            }
+            if (currentStyle.fontWeight !== baseStyle.fontWeight) {
+                styleChanges.fontWeight = currentStyle.fontWeight;
+            }
+            if (currentStyle.fontSize !== baseStyle.fontSize) {
+                styleChanges.fontSize = pt_px(currentStyle.fontSize);
+            }
+            if (currentStyle.strokeWeight !== baseStyle.strokeWeight) {
+                styleChanges.strokeWeight = pt_px(currentStyle.strokeWeight);
+            }
+            if (currentStyle.stroke !== baseStyle.stroke) {
+                styleChanges.stroke = currentStyle.stroke;
+            }
+            if (currentStyle.charSpacing !== baseStyle.charSpacing) {
+                styleChanges.charSpacing = currentStyle.charSpacing;
+            }
+            if (currentStyle.leading !== baseStyle.leading) {
+                styleChanges.leading = currentStyle.leading;
+            }
+            if (currentStyle.lineHeight !== baseStyle.lineHeight) {
+                styleChanges.lineHeight = currentStyle.lineHeight;
+            }
+            if (currentStyle.idmlLeading !== baseStyle.idmlLeading) {
+                styleChanges.idmlLeading = currentStyle.idmlLeading;
+            }
+            if (currentStyle.idmlTracking !== baseStyle.idmlTracking) {
+                styleChanges.idmlTracking = currentStyle.idmlTracking;
+            }
+            if (currentStyle.idmlKerningMethod !== baseStyle.idmlKerningMethod) {
+                styleChanges.idmlKerningMethod = currentStyle.idmlKerningMethod;
+            }
+            if (currentStyle.idmlKerningValue !== baseStyle.idmlKerningValue) {
+                styleChanges.idmlKerningValue = currentStyle.idmlKerningValue;
+            }
+            if (currentStyle.kerning !== baseStyle.kerning) {
+                styleChanges.kerning = currentStyle.kerning;
+            }
+            if (currentStyle.deltaY !== baseStyle.deltaY) {
+                styleChanges.deltaY = currentStyle.deltaY;
+            }
+            if (currentStyle.idmlBaselineShift !== baseStyle.idmlBaselineShift) {
+                styleChanges.idmlBaselineShift = currentStyle.idmlBaselineShift;
+            }
+            if (currentStyle.underline !== baseStyle.underline) {
+                styleChanges.underline = currentStyle.underline;
+            }
+            if (currentStyle.capitalization !== baseStyle.capitalization && currentStyle.capitalization !== 'Normal') {
+                styleChanges.capitalization = currentStyle.capitalization;
+            }
+            if (currentStyle.position !== baseStyle.position && currentStyle.position !== 'Normal') {
+                styleChanges.position = currentStyle.position;
+            }
+            if (currentStyle.spot !== baseStyle.spot) {
+                styleChanges.spot = currentStyle.spot;
+            }
+
+            if (Object.keys(styleChanges).length > 0) {
+                styles[i] = styleChanges;
+            }
+        }
+
+        return {
+            text,
+            styles: Object.keys(styles).length > 0 ? styles : [],
+            font: baseStyle.fontFamily,
+            fillColor: baseStyle.fill,
+            strokeColor: baseStyle.stroke,
+            fontStyle: baseStyle.fontWeight,
+            fontSize: baseStyle.fontSize,
+            strokeWeight: baseStyle.strokeWeight,
+            leading: pickStyleValue(baseStyle.leading, pItems.leading, 'Auto'),
+            lineHeight: pickStyleValue(baseStyle.lineHeight, resolveLeading(pItems.leading, pItems.fontSize).lineHeight, 1.13),
+            tracking: pickStyleValue(baseStyle.idmlTracking, pItems.tracking, '0'),
+            charSpacing: pickStyleValue(baseStyle.charSpacing, resolveTracking(pItems.tracking), 0),
+            kerningMethod: baseStyle.idmlKerningMethod,
+            kerningValue: baseStyle.idmlKerningValue,
+            kerning: baseStyle.kerning,
+            baselineShift: baseStyle.idmlBaselineShift,
+            deltaY: baseStyle.deltaY,
+            justification: pItems.justification,
+            cmyk: baseStyle.cmyk,
+            spot: baseStyle.spot,
+            underline: baseStyle.underline,
+            capitalization: baseStyle.capitalization,
+            position: baseStyle.position
+        };
+    }
+
+    function attachInternalStoryData(storyData, allCharStyles, pItems) {
+        Object.defineProperty(storyData, '_charStyles', {
+            value: allCharStyles,
+            enumerable: false
+        });
+        Object.defineProperty(storyData, '_pItems', {
+            value: pItems,
+            enumerable: false
+        });
+        return storyData;
+    }
+
+    function getParagraphRangeOverrides(paraRange) {
+        return extractStyleProperties(paraRange, {
+            skipAttrs: new Set(['AppliedParagraphStyle']),
+            skipPropertyTags: new Set(['TabList', 'AlternativeDestination'])
+        });
+    }
+
+    function getCharacterRangeOverrides(charRange) {
+        return extractStyleProperties(charRange, {
+            skipAttrs: new Set(['AppliedCharacterStyle']),
+            skipPropertyTags: new Set(['AlternativeDestination'])
+        });
+    }
+
+    function getThreadSegments(storyData, threadInfo) {
+        if (storyThreadSegmentsCache.has(threadInfo.chainId)) {
+            return storyThreadSegmentsCache.get(threadInfo.chainId);
+        }
+
+        const chain = threadedTextFrameChains.get(threadInfo.chainId);
+        const text = storyData.text || '';
+        const capacities = chain.map(frame => estimateTextFrameCapacity(frame, storyData));
+        const totalCapacity = capacities.reduce((sum, capacity) => sum + capacity, 0);
+        const segments = new Map();
+        let start = 0;
+        let consumedCapacity = 0;
+
+        for (let i = 0; i < chain.length; i++) {
+            const frame = chain[i];
+            let end = text.length;
+
+            if (i < chain.length - 1 && text.length > 0) {
+                consumedCapacity += capacities[i];
+                const target = Math.round((consumedCapacity / totalCapacity) * text.length);
+                end = chooseStorySplitIndex(text, target, start, text.length);
+            }
+
+            segments.set(frame.self, { start, end });
+            start = end;
+        }
+
+        addWarning(
+            'THREADED_STORY_ESTIMATED',
+            'Threaded text frame story flow was split with an estimated capacity model because IDML does not store composed frame break positions.',
+            {
+                storyId: threadInfo.storyId,
+                chainId: threadInfo.chainId,
+                frameCount: chain.length
+            }
+        );
+
+        storyThreadSegmentsCache.set(threadInfo.chainId, segments);
+        return segments;
+    }
+
+    function sliceStoryData(storyData, start, end, graphicDOM) {
+        const textSlice = (storyData.text || '').slice(start, end);
+        const charStyles = Array.isArray(storyData._charStyles)
+            ? storyData._charStyles.slice(start, end)
+            : [];
+        const sliced = buildStoryDataFromResolvedStyles(textSlice, charStyles, storyData._pItems || {}, graphicDOM);
+        return attachInternalStoryData(sliced, charStyles, storyData._pItems || {});
+    }
+
+    async function get_threaded_story_data(parentStory, frameSelf, zip, stylesDOM, graphicDOM, parseXml) {
+        const storyData = await get_story_data(parentStory, zip, stylesDOM, graphicDOM, parseXml);
+        const threadInfo = threadedTextFrameMap.get(frameSelf);
+
+        if (!threadInfo) {
+            return storyData;
+        }
+
+        const segments = getThreadSegments(storyData, threadInfo);
+        const segment = segments.get(frameSelf);
+        const slicedStoryData = sliceStoryData(storyData, segment.start, segment.end, graphicDOM);
+        slicedStoryData.threadedStory = {
+            storyId: parentStory,
+            chainId: threadInfo.chainId,
+            frameIndex: threadInfo.frameIndex,
+            frameCount: threadInfo.chainLength,
+            start: segment.start,
+            end: segment.end,
+            split: 'estimated'
+        };
+
+        return slicedStoryData;
+    }
+
     async function getTextFrame(itemElement, stylesDOM, graphicDOM, zip, parseXml, parent) {
         const attrib = itemElement.attributes;
         const objectStyle = applyObjStyles(itemElement, stylesDOM);
@@ -708,7 +1178,7 @@ async function processIdml(filePath) {
         let height = Math.abs(bottomRight[1] - topLeft[1]);
 
         const parentStory = itemElement.getAttribute('ParentStory');
-        const storyData = await get_story_data(parentStory, zip, stylesDOM, graphicDOM, parseXml);
+        const storyData = await get_threaded_story_data(parentStory, itemElement.getAttribute('Self'), zip, stylesDOM, graphicDOM, parseXml);
 
         const textFramePref = itemElement.getElementsByTagName('TextFramePreference')[0];
         const verticalJustification = textFramePref ? textFramePref.getAttribute('VerticalJustification') : '';
@@ -727,13 +1197,37 @@ async function processIdml(filePath) {
             }
         }
 
-        const { text, styles, font, fontSize, leading, tracking, justification, fontStyle, strokeWeight, fillColor, strokeColor, capitalization, cmyk, spot, underline, position } = storyData;
+        const {
+            text,
+            styles,
+            font,
+            fontSize,
+            leading,
+            lineHeight,
+            tracking,
+            charSpacing,
+            kerningMethod,
+            kerningValue,
+            kerning,
+            baselineShift,
+            deltaY,
+            justification,
+            fontStyle,
+            strokeWeight,
+            fillColor,
+            strokeColor,
+            capitalization,
+            cmyk,
+            spot,
+            underline,
+            position
+        } = storyData;
 
         const finalFontFamily = font === 'No Font' ? 'Arial' : font;
         const finalFontSize = fontSize === 'No Font Size' ? 12 : parseFloat(fontSize);
 
         const parsedLeading = parseFloat(leading);
-        let finalLineHeight = 1.13;
+        let finalLineHeight = lineHeight || 1.13;
         if (leading !== 'Auto' && leading && !Number.isNaN(parsedLeading) && parsedLeading > 0) {
             if (parsedLeading > 3 && finalFontSize > 0) {
                 finalLineHeight = Number((parsedLeading / finalFontSize).toFixed(3));
@@ -792,7 +1286,14 @@ async function processIdml(filePath) {
             fontWeight: finalFontWeight,
             fontSize: pt_px(finalFontSize),
             lineHeight: finalLineHeight,
-            charSpacing: parseTrackingValue(tracking),
+            charSpacing: charSpacing !== undefined ? charSpacing : parseTrackingValue(tracking),
+            idmlTracking: tracking,
+            idmlLeading: leading,
+            idmlKerningMethod: kerningMethod,
+            idmlKerningValue: kerningValue,
+            kerning: kerning,
+            idmlBaselineShift: baselineShift,
+            deltaY: deltaY,
             fill: fillColor,
             cmyk: cmyk,
             fontFamily: finalFontFamily,
@@ -803,6 +1304,10 @@ async function processIdml(filePath) {
 
         if (spot) {
             pageItem.spot = spot;
+        }
+
+        if (storyData.threadedStory) {
+            pageItem.threaded_story = storyData.threadedStory;
         }
 
         applyOpacityAndBlend(pageItem, itemElement, objectStyle);
@@ -832,6 +1337,10 @@ async function processIdml(filePath) {
     }
 
     async function get_story_data(parentStory, zip, stylesDOM, graphicDOM, parseXml) {
+        if (storyDataCache.has(parentStory)) {
+            return storyDataCache.get(parentStory);
+        }
+
         const storyPath = `Stories/Story_${parentStory}.xml`;
         const storyDOM = await parseXml(storyPath);
         const storyRoot = storyDOM.getElementsByTagName('Story')[0];
@@ -845,33 +1354,25 @@ async function processIdml(filePath) {
         for (const paraRange of paragraphStyleRanges) {
             const paraStyleName = paraRange.getAttribute('AppliedParagraphStyle');
             const paraStyle = getParagraphStyle(paraStyleName, stylesDOM);
-
-            // Read inline overrides on the ParagraphStyleRange element itself
-            // These override anything from the paragraph style definition
-            const paraInlineFont = null; // Font is always in Properties/AppliedFont
-            let paraInlineFontFromProps = null;
-            const paraPropsElements = paraRange.getElementsByTagName('Properties');
-            if (paraPropsElements.length > 0) {
-                const paraAppliedFontEls = paraPropsElements[0].getElementsByTagName('AppliedFont');
-                if (paraAppliedFontEls.length > 0) {
-                    paraInlineFontFromProps = paraAppliedFontEls[0].textContent;
-                }
-            }
+            const paraOverrides = getParagraphRangeOverrides(paraRange);
 
             // Cascade: inline para override > paragraph style definition
             // These are the "paragraph-level" resolved values
-            const paraFont = paraInlineFontFromProps || paraStyle.AppliedFont || 'Minion Pro';
-            const paraLeading = paraRange.getAttribute('Leading') || paraStyle.Leading || 'Auto';
-            const paraTracking = paraRange.getAttribute('Tracking') || paraStyle.Tracking || '0';
-            const paraFillColor = paraRange.getAttribute('FillColor') || paraStyle.FillColor || 'Color/Black';
-            const paraFontWeight = paraRange.getAttribute('FontStyle') || paraStyle.FontStyle || 'Regular';
-            const paraFontSize = paraRange.getAttribute('PointSize') || paraStyle.PointSize || '12';
-            const paraJustification = paraRange.getAttribute('Justification') || paraStyle.Justification || 'LeftAlign';
-            const paraStrokeWeight = paraRange.getAttribute('StrokeWeight') || paraStyle.StrokeWeight || '0';
-            const paraStrokeColor = paraRange.getAttribute('StrokeColor') || paraStyle.StrokeColor || null;
-            const paraCapitalization = paraRange.getAttribute('Capitalization') || paraStyle.Capitalization || 'Normal';
-            const paraUnderline = paraRange.getAttribute('Underline') || paraStyle.Underline || 'false';
-            const paraPosition = paraRange.getAttribute('Position') || paraStyle.Position || 'Normal';
+            const paraFont = pickStyleValue(paraOverrides.AppliedFont, paraStyle.AppliedFont, 'Minion Pro');
+            const paraLeading = pickStyleValue(paraOverrides.Leading, paraStyle.Leading, 'Auto');
+            const paraTracking = pickStyleValue(paraOverrides.Tracking, paraStyle.Tracking, '0');
+            const paraFillColor = pickStyleValue(paraOverrides.FillColor, paraStyle.FillColor, 'Color/Black');
+            const paraFontWeight = pickStyleValue(paraOverrides.FontStyle, paraStyle.FontStyle, 'Regular');
+            const paraFontSize = pickStyleValue(paraOverrides.PointSize, paraStyle.PointSize, '12');
+            const paraJustification = pickStyleValue(paraOverrides.Justification, paraStyle.Justification, 'LeftAlign');
+            const paraStrokeWeight = pickStyleValue(paraOverrides.StrokeWeight, paraStyle.StrokeWeight, '0');
+            const paraStrokeColor = pickStyleValue(paraOverrides.StrokeColor, paraStyle.StrokeColor, null);
+            const paraCapitalization = pickStyleValue(paraOverrides.Capitalization, paraStyle.Capitalization, 'Normal');
+            const paraUnderline = pickStyleValue(paraOverrides.Underline, paraStyle.Underline, 'false');
+            const paraPosition = pickStyleValue(paraOverrides.Position, paraStyle.Position, 'Normal');
+            const paraKerningMethod = pickStyleValue(paraOverrides.KerningMethod, paraStyle.KerningMethod, null);
+            const paraKerningValue = pickStyleValue(paraOverrides.KerningValue, paraStyle.KerningValue, null);
+            const paraBaselineShift = pickStyleValue(paraOverrides.BaselineShift, paraStyle.BaselineShift, null);
 
             // Store resolved paragraph values for this range
             pItems = {
@@ -886,7 +1387,10 @@ async function processIdml(filePath) {
                 strokeColor: paraStrokeColor,
                 capitalization: paraCapitalization,
                 underline: paraUnderline,
-                position: paraPosition
+                position: paraPosition,
+                kerningMethod: paraKerningMethod,
+                kerningValue: paraKerningValue,
+                baselineShift: paraBaselineShift
             };
 
             const charStyleRanges = Array.from(paraRange.getElementsByTagName('CharacterStyleRange'));
@@ -894,16 +1398,7 @@ async function processIdml(filePath) {
             for (const charRange of charStyleRanges) {
                 const charStyleName = charRange.getAttribute('AppliedCharacterStyle');
                 const charStyleDef = getCharacterStyle(charStyleName, stylesDOM);
-
-                // Get Properties/AppliedFont from child Properties element on charRange
-                let charInlineFontFromProps = null;
-                const charPropsElements = charRange.getElementsByTagName('Properties');
-                if (charPropsElements.length > 0) {
-                    const appliedFontElements = charPropsElements[0].getElementsByTagName('AppliedFont');
-                    if (appliedFontElements.length > 0) {
-                        charInlineFontFromProps = appliedFontElements[0].textContent;
-                    }
-                }
+                const charOverrides = getCharacterRangeOverrides(charRange);
 
                 const contentNodes = Array.from(charRange.childNodes).filter(n => n.tagName === 'Content' || n.tagName === 'Br');
 
@@ -916,20 +1411,26 @@ async function processIdml(filePath) {
                         text += contentText;
 
                         // Full cascade: inline charRange attr > charStyle def > paragraph resolved
-                        const font = charInlineFontFromProps || charStyleDef.AppliedFont || pItems.font;
-                        const fill = charRange.getAttribute('FillColor') || charStyleDef.FillColor || pItems.fillColor;
-                        const fontWeight = charRange.getAttribute('FontStyle') || charStyleDef.FontStyle || pItems.fontWeight;
-                        const fontSize = charRange.getAttribute('PointSize') || charStyleDef.PointSize || pItems.fontSize;
-                        const strokeWeight = charRange.getAttribute('StrokeWeight') || charStyleDef.StrokeWeight || pItems.strokeWeight;
-                        const tracking = charRange.getAttribute('Tracking') || charStyleDef.Tracking || pItems.tracking;
-                        const strokeColor = charRange.getAttribute('StrokeColor') || charStyleDef.StrokeColor || pItems.strokeColor;
-                        const underline = charRange.getAttribute('Underline') || charStyleDef.Underline || pItems.underline;
-                        const capitalization = charRange.getAttribute('Capitalization') || charStyleDef.Capitalization || pItems.capitalization;
-                        const position = charRange.getAttribute('Position') || charStyleDef.Position || pItems.position;
+                        const font = pickStyleValue(charOverrides.AppliedFont, charStyleDef.AppliedFont, pItems.font);
+                        const fill = pickStyleValue(charOverrides.FillColor, charStyleDef.FillColor, pItems.fillColor);
+                        const fontWeight = pickStyleValue(charOverrides.FontStyle, charStyleDef.FontStyle, pItems.fontWeight);
+                        const fontSize = pickStyleValue(charOverrides.PointSize, charStyleDef.PointSize, pItems.fontSize);
+                        const strokeWeight = pickStyleValue(charOverrides.StrokeWeight, charStyleDef.StrokeWeight, pItems.strokeWeight);
+                        const tracking = pickStyleValue(charOverrides.Tracking, charStyleDef.Tracking, pItems.tracking);
+                        const leading = pickStyleValue(charOverrides.Leading, charStyleDef.Leading, pItems.leading);
+                        const strokeColor = pickStyleValue(charOverrides.StrokeColor, charStyleDef.StrokeColor, pItems.strokeColor);
+                        const underline = pickStyleValue(charOverrides.Underline, charStyleDef.Underline, pItems.underline);
+                        const capitalization = pickStyleValue(charOverrides.Capitalization, charStyleDef.Capitalization, pItems.capitalization);
+                        const position = pickStyleValue(charOverrides.Position, charStyleDef.Position, pItems.position);
+                        const kerningMethod = pickStyleValue(charOverrides.KerningMethod, charStyleDef.KerningMethod, pItems.kerningMethod);
+                        const kerningValue = pickStyleValue(charOverrides.KerningValue, charStyleDef.KerningValue, pItems.kerningValue);
+                        const baselineShift = pickStyleValue(charOverrides.BaselineShift, charStyleDef.BaselineShift, pItems.baselineShift);
 
                         const spot = get_spot_color(fill, graphicDOM);
                         const fillColorObj = fill ? get_color(fill, graphicDOM) : null;
                         const strokeColorObj = strokeColor ? get_color(strokeColor, graphicDOM) : null;
+                        const resolvedLeading = resolveLeading(leading, fontSize);
+                        const resolvedBaselineShift = resolveBaselineShift(position, baselineShift, fontSize);
 
                         // Create full style object for this range
                         const rangeStyle = {
@@ -940,7 +1441,16 @@ async function processIdml(filePath) {
                             fontSize: fontSize,
                             strokeWeight: strokeWeight,
                             stroke: strokeColorObj ? strokeColorObj.rgb : "rgb(0, 0, 0)",
-                            charSpacing: tracking === 'No Tracking' ? 0 : (Number.isFinite(parseFloat(tracking)) ? parseFloat(tracking) : 0),
+                            charSpacing: resolveTracking(tracking),
+                            leading: leading,
+                            lineHeight: resolvedLeading.lineHeight,
+                            idmlLeading: resolvedLeading.idmlLeading,
+                            idmlTracking: tracking,
+                            idmlKerningMethod: kerningMethod,
+                            idmlKerningValue: kerningValue,
+                            kerning: resolveKerningValue(kerningValue),
+                            idmlBaselineShift: resolvedBaselineShift.idmlBaselineShift,
+                            deltaY: resolvedBaselineShift.deltaY,
                             underline: underline === 'true',
                             capitalization: capitalization,
                             position: position,
@@ -956,108 +1466,13 @@ async function processIdml(filePath) {
             }
         }
 
-        // Determine base style: use first character's style if it exists
-        let baseStyle;
-        if (allCharStyles.length > 0 && allCharStyles[0] !== null) {
-            baseStyle = allCharStyles[0];
-        } else {
-            // Fallback to paragraph defaults if no character styles exist
-            const fallbackFill = pItems.fillColor ? get_color(pItems.fillColor, graphicDOM) : null;
-            baseStyle = {
-                fontFamily: pItems.font || 'Minion Pro',
-                fill: fallbackFill ? fallbackFill.rgb : "rgb(0, 0, 0)",
-                cmyk: fallbackFill ? fallbackFill.cmyk : "[0, 0, 0, 100]",
-                fontWeight: pItems.fontWeight || 'Regular',
-                fontSize: pItems.fontSize || '12',
-                strokeWeight: pItems.strokeWeight || '0',
-                stroke: "rgb(0, 0, 0)",
-                charSpacing: pItems.tracking === 'No Tracking' ? 0 : (Number.isFinite(parseFloat(pItems.tracking)) ? parseFloat(pItems.tracking) : 0),
-                underline: false,
-                capitalization: 'Normal',
-                position: 'Normal',
-                spot: null
-            };
-        }
-
-        // Build styles object with only characters that differ from base style
-        const styles = {};
-
-        for (let i = 0; i < allCharStyles.length; i++) {
-            const currentStyle = allCharStyles[i];
-
-            if (currentStyle === null) {
-                continue;
-            }
-
-            // Compare with base style to find differences
-            const styleChanges = {};
-
-            if (currentStyle.fontFamily !== baseStyle.fontFamily) {
-                styleChanges.fontFamily = currentStyle.fontFamily;
-                styleChanges.fontWeight = currentStyle.fontWeight;
-            }
-            if (currentStyle.fill !== baseStyle.fill) {
-                styleChanges.fill = currentStyle.fill;
-            }
-            if (currentStyle.cmyk !== baseStyle.cmyk) {
-                styleChanges.cmyk = currentStyle.cmyk;
-            }
-            if (currentStyle.fontWeight !== baseStyle.fontWeight) {
-                styleChanges.fontWeight = currentStyle.fontWeight;
-            }
-            if (currentStyle.fontSize !== baseStyle.fontSize) {
-                styleChanges.fontSize = pt_px(currentStyle.fontSize);
-            }
-            if (currentStyle.strokeWeight !== baseStyle.strokeWeight) {
-                styleChanges.strokeWeight = pt_px(currentStyle.strokeWeight);
-            }
-            if (currentStyle.stroke !== baseStyle.stroke) {
-                styleChanges.stroke = currentStyle.stroke;
-            }
-            if (currentStyle.charSpacing !== baseStyle.charSpacing) {
-                styleChanges.charSpacing = currentStyle.charSpacing;
-            }
-            if (currentStyle.underline !== baseStyle.underline) {
-                styleChanges.underline = currentStyle.underline;
-            }
-            if (currentStyle.capitalization !== baseStyle.capitalization && currentStyle.capitalization !== 'Normal') {
-                styleChanges.capitalization = currentStyle.capitalization;
-            }
-            if (currentStyle.position !== baseStyle.position && currentStyle.position !== 'Normal') {
-                styleChanges.position = currentStyle.position;
-            }
-            if (currentStyle.spot !== baseStyle.spot) {
-                styleChanges.spot = currentStyle.spot;
-            }
-
-            // Only add to styles if there are differences
-            if (Object.keys(styleChanges).length > 0) {
-                styles[i] = styleChanges;
-            }
-        }
-
-        // Convert styles object to array format only if there are differences
-        const stylesArray = Object.keys(styles).length > 0 ? styles : [];
-
-
-        return {
-            text,
-            styles: stylesArray,
-            font: baseStyle.fontFamily,
-            fillColor: baseStyle.fill,
-            strokeColor: baseStyle.stroke,
-            fontStyle: baseStyle.fontWeight,
-            fontSize: baseStyle.fontSize,
-            strokeWeight: baseStyle.strokeWeight,
-            leading: pItems.leading,
-            tracking: pItems.tracking,
-            justification: pItems.justification,
-            cmyk: baseStyle.cmyk,
-            spot: baseStyle.spot,
-            underline: baseStyle.underline,
-            capitalization: baseStyle.capitalization,
-            position: baseStyle.position
-        };
+        const storyData = attachInternalStoryData(
+            buildStoryDataFromResolvedStyles(text, allCharStyles, pItems, graphicDOM),
+            allCharStyles,
+            pItems
+        );
+        storyDataCache.set(parentStory, storyData);
+        return storyData;
     } async function getPolygon(itemElement, stylesDOM, graphicDOM, parent) {
         const attrib = itemElement.attributes;
         const objectStyle = applyObjStyles(itemElement, stylesDOM);
@@ -1450,6 +1865,7 @@ async function processIdml(filePath) {
         return pageItem;
     }
 
+    const spreadEntries = [];
     for (const spreadPath of spreadPaths) {
         const spreadDOM = await parseXml(spreadPath);
         const spreadElement = spreadDOM.getElementsByTagName('Spread')[0];
@@ -1458,6 +1874,13 @@ async function processIdml(filePath) {
             console.warn(`No Spread element found in ${spreadPath}`);
             continue;
         }
+
+        spreadEntries.push({ spreadPath, spreadDOM, spreadElement });
+    }
+
+    buildThreadedTextFrameMap(spreadEntries);
+
+    for (const { spreadPath, spreadElement } of spreadEntries) {
 
         const pageElements = Array.from(spreadElement.getElementsByTagName('Page'));
 

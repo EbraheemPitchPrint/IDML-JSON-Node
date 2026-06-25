@@ -1,4 +1,9 @@
 const paraStyleCache = new Map();
+const {
+    extractStyleProperties,
+    getBasedOnReference,
+    normalizeStyleReference
+} = require('./styleUtils');
 
 /**
  * Clears the paragraph style cache. Should be called between processing different IDML files.
@@ -17,41 +22,13 @@ function clearParagraphStyleCache() {
  * @returns {Object} All extracted style properties.
  */
 function getStyleProperties(styleElement) {
-    const properties = {};
-
-    // Metadata attributes to skip (not style properties)
     const skipAttrs = new Set([
         'Self', 'Name', 'Imported', 'SplitDocument', 'EmitCss', 'StyleUniqueId',
         'IncludeClass', 'ExtendedKeyboardShortcut', 'NextStyle', 'KeyboardShortcut',
         'BasedOn', 'EmptyNestedStyles', 'EmptyLineStyles', 'EmptyGrepStyles'
     ]);
-
-    // 1. Read all XML attributes from the element
-    for (let i = 0; i < styleElement.attributes.length; i++) {
-        const attr = styleElement.attributes[i];
-        if (!skipAttrs.has(attr.name)) {
-            properties[attr.name] = attr.value;
-        }
-    }
-
-    // 2. Read child <Properties> element values (these supplement attributes)
-    const propsElements = styleElement.getElementsByTagName('Properties');
-    if (propsElements.length > 0) {
-        const propsElement = propsElements[0];
-        for (let i = 0; i < propsElement.childNodes.length; i++) {
-            const child = propsElement.childNodes[i];
-            if (child.nodeType === 1) { // Element node
-                // Skip BasedOn (handled separately) and non-style metadata
-                if (child.tagName === 'BasedOn' || child.tagName === 'PreviewColor' ||
-                    child.tagName === 'TabList') {
-                    continue;
-                }
-                properties[child.tagName] = child.textContent;
-            }
-        }
-    }
-
-    return properties;
+    const skipPropertyTags = new Set(['BasedOn', 'PreviewColor', 'TabList']);
+    return extractStyleProperties(styleElement, { skipAttrs, skipPropertyTags });
 }
 
 /**
@@ -62,21 +39,7 @@ function getStyleProperties(styleElement) {
  * @returns {string|null} The BasedOn style reference, or null.
  */
 function getBasedOn(styleElement) {
-    // Check attribute first
-    const attrBasedOn = styleElement.getAttribute('BasedOn');
-    if (attrBasedOn) return attrBasedOn;
-
-    // Check Properties/BasedOn element
-    const propsElements = styleElement.getElementsByTagName('Properties');
-    if (propsElements.length > 0) {
-        const basedOnElements = propsElements[0].getElementsByTagName('BasedOn');
-        if (basedOnElements.length > 0) {
-            const value = basedOnElements[0].textContent;
-            if (value) return value;
-        }
-    }
-
-    return null;
+    return getBasedOnReference(styleElement);
 }
 
 /**
@@ -88,38 +51,30 @@ function getBasedOn(styleElement) {
  * @returns {Object} The fully resolved style properties.
  */
 function getParagraphStyle(styleName, stylesDOM) {
-    if (!styleName) return {};
+    const normalizedStyleName = normalizeStyleReference(
+        styleName,
+        'ParagraphStyle/',
+        '$ID/[No paragraph style]'
+    );
+    if (!normalizedStyleName) return {};
 
-    if (paraStyleCache.has(styleName)) {
-        return paraStyleCache.get(styleName);
+    if (paraStyleCache.has(normalizedStyleName)) {
+        return paraStyleCache.get(normalizedStyleName);
     }
 
     // Find the ParagraphStyle element with matching Self attribute
     const styleElements = stylesDOM.getElementsByTagName('ParagraphStyle');
     let styleElement = null;
-    let resolvedName = styleName;
 
     for (let i = 0; i < styleElements.length; i++) {
-        if (styleElements[i].getAttribute('Self') === styleName) {
+        if (styleElements[i].getAttribute('Self') === normalizedStyleName) {
             styleElement = styleElements[i];
             break;
         }
     }
 
-    // Try with "ParagraphStyle/" prefix if not found
-    if (!styleElement && !styleName.startsWith('ParagraphStyle/')) {
-        const prefixed = 'ParagraphStyle/' + styleName;
-        for (let i = 0; i < styleElements.length; i++) {
-            if (styleElements[i].getAttribute('Self') === prefixed) {
-                styleElement = styleElements[i];
-                resolvedName = prefixed;
-                break;
-            }
-        }
-    }
-
     if (!styleElement) {
-        paraStyleCache.set(styleName, {});
+        paraStyleCache.set(normalizedStyleName, {});
         return {};
     }
 
@@ -131,20 +86,14 @@ function getParagraphStyle(styleName, stylesDOM) {
     let resolvedStyle;
 
     if (basedOn) {
-        // Normalise BasedOn reference
-        let basedOnFull = basedOn;
-        if (!basedOn.startsWith('ParagraphStyle/') && basedOn.startsWith('$ID/')) {
-            basedOnFull = 'ParagraphStyle/' + basedOn;
-        }
-
-        const baseStyle = getParagraphStyle(basedOnFull, stylesDOM);
+        const baseStyle = getParagraphStyle(basedOn, stylesDOM);
         // Base style properties, then override with own properties
         resolvedStyle = { ...baseStyle, ...ownProperties };
     } else {
         resolvedStyle = { ...ownProperties };
     }
 
-    paraStyleCache.set(styleName, resolvedStyle);
+    paraStyleCache.set(normalizedStyleName, resolvedStyle);
     return resolvedStyle;
 }
 
