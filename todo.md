@@ -24,7 +24,7 @@
 - [x] Threaded story flow across linked text frames (estimated split with diagnostics)
 - [x] Paragraph/character style inheritance + overrides
 - [x] Kerning/tracking/leading/baseline shift mapping
-- [ ] First baseline behavior parity
+- [x] First baseline behavior parity
 - [ ] Text-on-path baseline/alignment/start-offset parity
 - [ ] OpenType features (ligatures, small caps, etc.)
 - [ ] Superscript/subscript and case transforms

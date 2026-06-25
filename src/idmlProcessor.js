@@ -896,6 +896,59 @@ async function processIdml(filePath) {
         return parsed;
     }
 
+    function resolveFirstBaseline(textFramePref, fontSize, leading) {
+        const mode = textFramePref ? textFramePref.getAttribute('FirstBaselineOffset') : null;
+        const minimumOffset = textFramePref ? parseStyleNumber(textFramePref.getAttribute('MinimumFirstBaselineOffset'), 0) : 0;
+        const parsedFontSize = parseStyleNumber(fontSize, 12) || 12;
+        const resolvedLeading = resolveLeading(leading, fontSize);
+        let estimatedOffset = minimumOffset || 0;
+        let source = 'minimum';
+
+        switch (mode) {
+            case 'AscentOffset':
+                estimatedOffset = parsedFontSize * 0.8;
+                source = 'ascent-estimate';
+                break;
+            case 'CapHeight':
+                estimatedOffset = parsedFontSize * 0.7;
+                source = 'cap-height-estimate';
+                break;
+            case 'LeadingOffset':
+                estimatedOffset = resolvedLeading.leadingPx / 1.333;
+                source = 'leading';
+                break;
+            case 'XHeight':
+            case 'xHeight':
+                estimatedOffset = parsedFontSize * 0.5;
+                source = 'x-height-estimate';
+                break;
+            case 'EmBoxHeight':
+                estimatedOffset = parsedFontSize;
+                source = 'em-box';
+                break;
+            case 'FixedHeight':
+                estimatedOffset = minimumOffset || 0;
+                source = 'fixed-height';
+                break;
+            default:
+                if (mode) {
+                    estimatedOffset = minimumOffset || parsedFontSize * 0.8;
+                    source = 'fallback-estimate';
+                }
+                break;
+        }
+
+        const offsetPt = Math.max(minimumOffset || 0, estimatedOffset || 0);
+
+        return {
+            mode: mode || null,
+            minimumOffset,
+            offsetPt,
+            offsetPx: pt_px(offsetPt),
+            source
+        };
+    }
+
     function chooseStorySplitIndex(text, targetIndex, minIndex, maxIndex) {
         if (targetIndex <= minIndex) {
             return minIndex;
@@ -1225,6 +1278,7 @@ async function processIdml(filePath) {
 
         const finalFontFamily = font === 'No Font' ? 'Arial' : font;
         const finalFontSize = fontSize === 'No Font Size' ? 12 : parseFloat(fontSize);
+        const firstBaseline = resolveFirstBaseline(textFramePref, finalFontSize, leading);
 
         const parsedLeading = parseFloat(leading);
         let finalLineHeight = lineHeight || 1.13;
@@ -1294,6 +1348,11 @@ async function processIdml(filePath) {
             kerning: kerning,
             idmlBaselineShift: baselineShift,
             deltaY: deltaY,
+            idmlFirstBaselineOffset: firstBaseline.mode,
+            idmlMinimumFirstBaselineOffset: firstBaseline.minimumOffset,
+            firstBaselineOffsetPt: firstBaseline.offsetPt,
+            firstBaselineOffsetPx: firstBaseline.offsetPx,
+            firstBaselineOffsetSource: firstBaseline.source,
             fill: fillColor,
             cmyk: cmyk,
             fontFamily: finalFontFamily,
